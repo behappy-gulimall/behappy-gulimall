@@ -1,0 +1,18 @@
+server:
+  port: 88
+
+spring:
+  application:
+    name: @project.artifactId@
+  cloud:
+    gateway:
+      routes:
+        - id: test_route
+          uri: https://www.baidu.com
+          predicates:
+            - Query=uri,baidu
+        - id: qq_route
+          uri: https://www.qq.com
+          predicates:
+            - Query=uri,qq
+

@@ -15,10 +15,10 @@
             <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
         <!--注册中心客户端-->
-        <dependency>
+        <!--<dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-        </dependency>
+        </dependency>-->
         <!--配置中心客户端-->
         <!--<dependency>
             <groupId>com.alibaba.cloud</groupId>

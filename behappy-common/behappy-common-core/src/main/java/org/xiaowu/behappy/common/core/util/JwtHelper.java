@@ -1,12 +1,12 @@
 package org.xiaowu.behappy.common.core.util;
 
+import cn.hutool.core.codec.Base64;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.StrUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.CompressionCodecs;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.util.Base64Utils;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -68,7 +68,7 @@ public class JwtHelper {
      * @return SecretKey
      */
     private static SecretKey generalKey() {
-        byte[] encodedKey = Base64Utils.decode(TOKEN_SIGN_KEY.getBytes(StandardCharsets.UTF_8));
+        byte[] encodedKey = Base64.decode(TOKEN_SIGN_KEY.getBytes(StandardCharsets.UTF_8));
         return new SecretKeySpec(encodedKey, 0, encodedKey.length, SignatureAlgorithm.HS256.getJcaName());
     }
 
