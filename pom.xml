@@ -11,6 +11,7 @@
     <properties>
         <behappy.version>RELEASE-3.0.0</behappy.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>17</java.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
@@ -246,11 +247,6 @@
             </dependency>
             <dependency>
                 <groupId>org.xiaowu</groupId>
-                <artifactId>behappy-common-mongo</artifactId>
-                <version>${behappy.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.xiaowu</groupId>
                 <artifactId>behappy-common-seata</artifactId>
                 <version>${behappy.version}</version>
             </dependency>
@@ -281,17 +277,22 @@
             </dependency>
             <dependency>
                 <groupId>org.xiaowu</groupId>
-                <artifactId>behappy-api-manager</artifactId>
+                <artifactId>behappy-api-auth</artifactId>
                 <version>${behappy.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.xiaowu</groupId>
-                <artifactId>behappy-api-hosp</artifactId>
+                <artifactId>behappy-api-common</artifactId>
                 <version>${behappy.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.xiaowu</groupId>
-                <artifactId>behappy-api-msm</artifactId>
+                <artifactId>behappy-api-coupon</artifactId>
+                <version>${behappy.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.xiaowu</groupId>
+                <artifactId>behappy-api-member</artifactId>
                 <version>${behappy.version}</version>
             </dependency>
             <dependency>
@@ -301,22 +302,27 @@
             </dependency>
             <dependency>
                 <groupId>org.xiaowu</groupId>
-                <artifactId>behappy-api-user</artifactId>
+                <artifactId>behappy-api-product</artifactId>
                 <version>${behappy.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.xiaowu</groupId>
-                <artifactId>behappy-api-oss</artifactId>
+                <artifactId>behappy-api-search</artifactId>
                 <version>${behappy.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.xiaowu</groupId>
-                <artifactId>behappy-api-statistics</artifactId>
+                <artifactId>behappy-api-seckill</artifactId>
                 <version>${behappy.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.xiaowu</groupId>
-                <artifactId>behappy-api-common</artifactId>
+                <artifactId>behappy-api-thirdparty</artifactId>
+                <version>${behappy.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.xiaowu</groupId>
+                <artifactId>behappy-api-ware</artifactId>
                 <version>${behappy.version}</version>
             </dependency>
         </dependencies>

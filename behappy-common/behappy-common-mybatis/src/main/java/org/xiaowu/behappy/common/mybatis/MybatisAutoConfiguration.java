@@ -42,7 +42,7 @@ import java.util.List;
  * mybatis plus 统一配置
  * @author xiaowu
  */
-@MapperScan({"org.xiaowu.behappy.**.mapper"})
+@MapperScan({"org.xiaowu.behappy.**.dao"})
 @Configuration
 @RequiredArgsConstructor
 @EnableTransactionManagement

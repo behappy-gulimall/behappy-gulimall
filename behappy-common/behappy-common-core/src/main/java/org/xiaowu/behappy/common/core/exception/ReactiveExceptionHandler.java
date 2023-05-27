@@ -13,7 +13,7 @@ import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.handler.ResponseStatusExceptionHandler;
-import org.xiaowu.behappy.common.core.result.Result;
+import org.xiaowu.behappy.common.core.result.R;
 import reactor.core.publisher.Mono;
 
 /**
@@ -46,7 +46,7 @@ public class ReactiveExceptionHandler implements ErrorWebExceptionHandler {
 			DataBufferFactory bufferFactory = response.bufferFactory();
 			try {
 				log.warn("Error Spring Cloud Gateway : {} {}", exchange.getRequest().getPath(), ex.getMessage());
-				return bufferFactory.wrap(objectMapper.writeValueAsBytes(Result.failed(ex.getMessage())));
+				return bufferFactory.wrap(objectMapper.writeValueAsBytes(R.error(ex.getMessage())));
 			}
 			catch (JsonProcessingException e) {
 				log.error("Error writing response", ex);

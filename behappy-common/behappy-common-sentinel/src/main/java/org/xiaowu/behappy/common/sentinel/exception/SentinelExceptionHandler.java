@@ -9,7 +9,7 @@ import com.alibaba.csp.sentinel.slots.block.flow.FlowException;
 import com.alibaba.csp.sentinel.slots.block.flow.param.ParamFlowException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.xiaowu.behappy.common.core.result.Result;
+import org.xiaowu.behappy.common.core.result.R;
 
 import static org.xiaowu.behappy.common.core.constants.CommonConstants.CONTENT_TYPE;
 
@@ -37,6 +37,6 @@ public class SentinelExceptionHandler implements BlockExceptionHandler {
 
         response.setContentType(CONTENT_TYPE);
         response.setStatus(status);
-        response.getWriter().println(JSONUtil.toJsonStr(Result.failed(msg)));
+        response.getWriter().println(JSONUtil.toJsonStr(R.error(msg)));
     }
 }

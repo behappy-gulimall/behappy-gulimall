@@ -22,7 +22,7 @@ public class GulimallException extends RuntimeException {
      * @param message
      * @param code
      */
-    public GulimallException(String message, Integer code) {
+    public GulimallException(Integer code, String message) {
         super(message);
         this.code = code;
     }

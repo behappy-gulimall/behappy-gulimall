@@ -6,7 +6,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.xiaowu.behappy.common.core.result.Result;
+import org.xiaowu.behappy.common.core.result.R;
 
 import java.util.Objects;
 import java.util.StringJoiner;
@@ -20,9 +20,9 @@ import java.util.StringJoiner;
 public class ServletExceptionHandler {
 
     @ExceptionHandler(GulimallException.class)
-    public Result beHappyExceptionHandler(GulimallException ex) {
+    public R beHappyExceptionHandler(GulimallException ex) {
         extractedErrPrint(ex);
-        return Result.failed(ex.getCode(), ex.getMessage());
+        return R.error(ex.getCode(), ex.getMessage());
     }
 
 
@@ -30,20 +30,20 @@ public class ServletExceptionHandler {
      * 参数校验不通过异常
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Result handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+    public R handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
         extractedErrPrint(ex);
         StringJoiner sj = new StringJoiner(";");
         ex.getBindingResult().getFieldErrors().forEach(x -> sj.add(x.getDefaultMessage()));
-        return Result.failed(ex);
+        return R.error(ex);
     }
 
     /**
      * Controller参数绑定错误
      */
     @ExceptionHandler(MissingServletRequestParameterException.class)
-    public Result handleMissingServletRequestParameterException(MissingServletRequestParameterException ex) {
+    public R handleMissingServletRequestParameterException(MissingServletRequestParameterException ex) {
         extractedErrPrint(ex);
-        return Result.failed(ex);
+        return R.error(ex);
     }
 
 
@@ -53,9 +53,9 @@ public class ServletExceptionHandler {
      * @return
      */
     @ExceptionHandler(Exception.class)
-    public Result exceptionHandler(Exception ex) {
+    public R exceptionHandler(Exception ex) {
         extractedErrPrint(ex);
-        return Result.failed(ex);
+        return R.error(ex);
     }
 
     private static void extractedErrPrint(Exception ex) {

@@ -1,13 +1,16 @@
 server:
   port: 88
-
 spring:
   application:
     name: @project.artifactId@
   cloud:
     gateway:
+      discovery:
+        locator:
+          enabled: false
+          lower-case-service-id: true
       routes:
-        - id: test_route
+        - id: baidu_route
           uri: https://www.baidu.com
           predicates:
             - Query=uri,baidu
@@ -15,4 +18,15 @@ spring:
           uri: https://www.qq.com
           predicates:
             - Query=uri,qq
-
+        - id: behappy-product
+          uri: http://localhost:30001
+          predicates:
+            - Path=/api/product/**
+          filters:
+            - RewritePath=/api/(?<segment>/?.*),/$\{segment}
+        - id: behappy-gulimall-fast
+          uri: http://localhost:8080
+          predicates:
+            - Path=/api/**
+          filters:
+            - RewritePath=/api/(?<segment>/?.*), /renren-fast/$\{segment}

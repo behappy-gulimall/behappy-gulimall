@@ -20,18 +20,22 @@
             <artifactId>spring-boot-starter-undertow</artifactId>
         </dependency>
         <!--注册中心客户端-->
-        <dependency>
+        <!--<dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
-        <!--配置中心客户端-->
+        &lt;!&ndash;配置中心客户端&ndash;&gt;
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>-->
+        <dependency>
+            <groupId>org.xiaowu</groupId>
+            <artifactId>behappy-api-member</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.github.behappy-project</groupId>
-            <artifactId>behappy-canal-spring-boot-starter</artifactId>
+            <groupId>org.xiaowu</groupId>
+            <artifactId>behappy-common-mybatis</artifactId>
         </dependency>
     </dependencies>
 

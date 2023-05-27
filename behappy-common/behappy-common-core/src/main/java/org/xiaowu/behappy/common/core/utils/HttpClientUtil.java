@@ -1,0 +1,126 @@
+package org.xiaowu.behappy.common.core.utils;
+
+import cn.hutool.core.util.StrUtil;
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.hc.client5.http.classic.methods.HttpGet;
+import org.apache.hc.client5.http.classic.methods.HttpPost;
+import org.apache.hc.client5.http.config.RequestConfig;
+import org.apache.hc.client5.http.entity.UrlEncodedFormEntity;
+import org.apache.hc.client5.http.impl.DefaultHttpRequestRetryStrategy;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager;
+import org.apache.hc.core5.http.HttpEntity;
+import org.apache.hc.core5.http.HttpStatus;
+import org.apache.hc.core5.http.NameValuePair;
+import org.apache.hc.core5.http.io.entity.EntityUtils;
+import org.apache.hc.core5.http.message.BasicNameValuePair;
+import org.apache.hc.core5.net.URIBuilder;
+import org.apache.hc.core5.util.Timeout;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+
+@SuppressWarnings("all")
+@Slf4j
+public class HttpClientUtil {
+    private static CloseableHttpClient httpClient = null;
+
+    static {
+        PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager();
+        // 总连接池数量
+        connectionManager.setMaxTotal(150);
+        // 设置每个主机（域名）的最大连接数（并发量大时，避免某一个使用过大而其他过小）
+        connectionManager.setDefaultMaxPerRoute(10);
+        // 可为每个域名设置单独的连接池数量
+        // connectionManager.setMaxPerRoute(new HttpRoute(new HttpHost("xx.xx.xx.xx")), 80);
+        // setConnectTimeout：设置建立连接的超时时间
+        // setConnectionRequestTimeout：从连接池中拿连接的等待超时时间
+        // setResponseTimeout：发出请求后等待对端应答的超时时间
+        RequestConfig requestConfig = RequestConfig.custom()
+                .setConnectTimeout(Timeout.ofMilliseconds(600000))
+                .setConnectionRequestTimeout(Timeout.ofMilliseconds(600000))
+                .setResponseTimeout(Timeout.ofMilliseconds(600000))
+                .build();
+        // 重试处理器，StandardHttpRequestRetryHandler
+        DefaultHttpRequestRetryStrategy retryHandler = new DefaultHttpRequestRetryStrategy();
+
+        httpClient = HttpClients.custom().setConnectionManager(connectionManager).setDefaultRequestConfig(requestConfig)
+                .setRetryStrategy(retryHandler).build();
+    }
+
+    public static JSONObject doHttpGet(String uri, Map<String, String> getParams) {
+        CloseableHttpResponse response = null;
+        try {
+            URIBuilder uriBuilder = new URIBuilder(uri);
+            if (null != getParams && !getParams.isEmpty()) {
+                List<NameValuePair> list = new ArrayList<>();
+                for (Map.Entry<String, String> param : getParams.entrySet()) {
+                    list.add(new BasicNameValuePair(param.getKey(), param.getValue()));
+                }
+                uriBuilder.setParameters(list);
+            }
+            HttpGet httpGet = new HttpGet(uriBuilder.build());
+            response = httpClient.execute(httpGet);
+            int statusCode = response.getCode();
+            if (HttpStatus.SC_OK == statusCode) {
+                HttpEntity entity = response.getEntity();
+                if (null != entity) {
+                    String resStr = EntityUtils.toString(entity, StandardCharsets.UTF_8);
+                    return JSON.parseObject(resStr);
+                }
+            }
+        } catch (Exception e) {
+            log.error("CloseableHttpClient-get-请求异常", e);
+        } finally {
+            try {
+                if (null != response)
+                    response.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return new JSONObject();
+    }
+
+    public static JSONObject doHttpPost(String uri, Map<String, Object> getParams) {
+        CloseableHttpResponse response = null;
+        try {
+            HttpPost httpPost = new HttpPost(uri);
+            if (null != getParams && !getParams.isEmpty()) {
+                List<NameValuePair> list = new ArrayList<>();
+                for (Map.Entry<String, Object> param : getParams.entrySet()) {
+                    list.add(new BasicNameValuePair(param.getKey(), StrUtil.toString(param.getValue())));
+                }
+                HttpEntity httpEntity = new UrlEncodedFormEntity(list, StandardCharsets.UTF_8);
+                httpPost.setEntity(httpEntity);
+            }
+            response = httpClient.execute(httpPost);
+            int statusCode = response.getCode();
+            if (HttpStatus.SC_OK == statusCode) {
+                HttpEntity entity = response.getEntity();
+                if (null != entity) {
+                    String resStr = EntityUtils.toString(entity, StandardCharsets.UTF_8);
+                    return JSON.parseObject(resStr);
+                }
+            }
+        } catch (Exception e) {
+            log.error("CloseableHttpClient-post-请求异常", e);
+        } finally {
+            try {
+                if (null != response)
+                    response.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return new JSONObject();
+    }
+}
