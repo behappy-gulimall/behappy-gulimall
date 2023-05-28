@@ -10,6 +10,7 @@ import org.xiaowu.behappy.product.dao.SkuSaleAttrValueDao;
 import org.xiaowu.behappy.product.entity.SkuSaleAttrValueEntity;
 import org.xiaowu.behappy.product.service.SkuSaleAttrValueService;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -26,4 +27,12 @@ public class SkuSaleAttrValueServiceImpl extends ServiceImpl<SkuSaleAttrValueDao
         return new PageUtils(page);
     }
 
+    @Override
+    public List<String> getSkuSaleAttrValuesAsStringList(Long skuId) {
+
+        SkuSaleAttrValueDao baseMapper = this.baseMapper;
+        List<String> stringList = baseMapper.getSkuSaleAttrValuesAsStringList(skuId);
+
+        return stringList;
+    }
 }

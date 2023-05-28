@@ -2,6 +2,7 @@ package org.xiaowu.behappy.product.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.xiaowu.behappy.product.entity.CategoryBrandRelationEntity;
 
 /**
@@ -14,4 +15,5 @@ import org.xiaowu.behappy.product.entity.CategoryBrandRelationEntity;
 @Mapper
 public interface CategoryBrandRelationDao extends BaseMapper<CategoryBrandRelationEntity> {
 
+    void updateCategory(@Param("catId") Long catId, @Param("name") String name);
 }

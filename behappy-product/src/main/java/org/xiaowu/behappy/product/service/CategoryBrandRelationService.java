@@ -2,8 +2,10 @@ package org.xiaowu.behappy.product.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.xiaowu.behappy.common.mybatis.utils.PageUtils;
+import org.xiaowu.behappy.product.entity.BrandEntity;
 import org.xiaowu.behappy.product.entity.CategoryBrandRelationEntity;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,5 +18,13 @@ import java.util.Map;
 public interface CategoryBrandRelationService extends IService<CategoryBrandRelationEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    void updateBrand(Long brandId, String name);
+
+    List<BrandEntity> getBrandsByCatId(Long catId);
+
+    void saveDetail(CategoryBrandRelationEntity categoryBrandRelation);
+
+    void updateCategory(Long catId, String name);
 }
 

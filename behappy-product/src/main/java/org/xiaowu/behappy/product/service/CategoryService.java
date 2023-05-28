@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import org.xiaowu.behappy.common.mybatis.utils.PageUtils;
 import org.xiaowu.behappy.product.entity.CategoryEntity;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,5 +19,11 @@ public interface CategoryService extends IService<CategoryEntity> {
     PageUtils queryPage(Map<String, Object> params);
 
     Long[] findCatelogPath(Long catelogId);
+
+    List<CategoryEntity> listWithTree();
+
+    void updateCascade(CategoryEntity category);
+
+    void removeMenuByIds(List<Long> list);
 }
 

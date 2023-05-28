@@ -16,5 +16,9 @@ import java.util.Map;
 public interface SpuInfoService extends IService<SpuInfoEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    SpuInfoEntity getSpuInfoBySkuId(Long skuId);
+
+    void up(Long spuId);
 }
 

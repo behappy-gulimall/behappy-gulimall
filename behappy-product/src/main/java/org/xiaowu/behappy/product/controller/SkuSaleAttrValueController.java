@@ -8,6 +8,7 @@ import org.xiaowu.behappy.product.entity.SkuSaleAttrValueEntity;
 import org.xiaowu.behappy.product.service.SkuSaleAttrValueService;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 
@@ -24,6 +25,12 @@ import java.util.Map;
 @RequestMapping("product/skusaleattrvalue")
 public class SkuSaleAttrValueController {
     private final SkuSaleAttrValueService skuSaleAttrValueService;
+
+    @GetMapping(value = "/stringList/{skuId}")
+    public List<String> getSkuSaleAttrValues(@PathVariable("skuId") Long skuId) {
+        List<String> stringList = skuSaleAttrValueService.getSkuSaleAttrValuesAsStringList(skuId);
+        return stringList;
+    }
 
     /**
      * 列表

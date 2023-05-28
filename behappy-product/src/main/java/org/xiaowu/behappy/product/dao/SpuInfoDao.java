@@ -2,6 +2,7 @@ package org.xiaowu.behappy.product.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.xiaowu.behappy.product.entity.SpuInfoEntity;
 
 /**
@@ -14,4 +15,5 @@ import org.xiaowu.behappy.product.entity.SpuInfoEntity;
 @Mapper
 public interface SpuInfoDao extends BaseMapper<SpuInfoEntity> {
 
+    void updaSpuStatus(@Param("spuId") Long spuId, @Param("code") int code);
 }

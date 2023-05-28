@@ -2,7 +2,10 @@ package org.xiaowu.behappy.product.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.xiaowu.behappy.product.entity.SkuSaleAttrValueEntity;
+
+import java.util.List;
 
 /**
  * sku销售属性&值
@@ -14,4 +17,5 @@ import org.xiaowu.behappy.product.entity.SkuSaleAttrValueEntity;
 @Mapper
 public interface SkuSaleAttrValueDao extends BaseMapper<SkuSaleAttrValueEntity> {
 
+    List<String> getSkuSaleAttrValuesAsStringList(@Param("skuId") Long skuId);
 }

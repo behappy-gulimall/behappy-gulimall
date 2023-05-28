@@ -1,8 +1,11 @@
 package org.xiaowu.behappy.product.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.xiaowu.behappy.common.core.result.R;
+import org.xiaowu.behappy.common.core.valid.UpdateGroup;
+import org.xiaowu.behappy.common.core.valid.UpdateStatusGroup;
 import org.xiaowu.behappy.common.mybatis.utils.PageUtils;
 import org.xiaowu.behappy.product.entity.BrandEntity;
 import org.xiaowu.behappy.product.service.BrandService;
@@ -64,8 +67,18 @@ public class BrandController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("product:brand:update")
-    public R update(@RequestBody BrandEntity brand){
-		brandService.updateById(brand);
+    public R update(@Validated({UpdateGroup.class}) @RequestBody BrandEntity brand){
+        brandService.updateDetail(brand);
+        return R.ok();
+    }
+
+    /**
+     * 修改状态
+     */
+    @RequestMapping("/update/status")
+    //@RequiresPermissions("product:brand:update")
+    public R updateStatus(@Validated(UpdateStatusGroup.class) @RequestBody BrandEntity brand){
+        brandService.updateById(brand);
 
         return R.ok();
     }
