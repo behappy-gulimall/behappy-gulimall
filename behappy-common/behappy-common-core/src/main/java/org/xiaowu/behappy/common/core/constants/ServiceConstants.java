@@ -31,6 +31,16 @@ public interface ServiceConstants {
      * 搜索模块
      */
     String SEARCH_SERVICE = "behappy-search";
+
+    /**
+     * 优惠券模块
+     */
+    String COUPON_SERVICE = "behappy-coupon";
+
+    /**
+     * 商品模块
+     */
+    String PRODUCT_SERVICE = "behappy-product";
     /*-----------------------------------服务名称------------------------------*/
 
 }

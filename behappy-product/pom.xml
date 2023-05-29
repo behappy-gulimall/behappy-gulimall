@@ -39,6 +39,10 @@
         </dependency>
         <dependency>
             <groupId>org.xiaowu</groupId>
+            <artifactId>behappy-api-coupon</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.xiaowu</groupId>
             <artifactId>behappy-api-search</artifactId>
         </dependency>
         <dependency>

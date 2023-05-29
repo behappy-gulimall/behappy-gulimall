@@ -31,12 +31,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.xiaowu.behappy.common.mybatis.config.BeHappyMetaObjectHandler;
-import org.xiaowu.behappy.common.mybatis.resolver.SqlFilterArgumentResolver;
-
-import java.util.List;
 
 /**
  * mybatis plus 统一配置
@@ -65,15 +61,6 @@ public class MybatisAutoConfiguration implements WebMvcConfigurer {
         long dataCenterId = Long.parseLong(environment.getProperty("snowflake.data-center-id", "0"));
         long workerId = Long.parseLong(environment.getProperty("snowflake.machine-id", "0"));
         return new DefaultIdentifierGenerator(workerId, dataCenterId);
-    }
-
-    /**
-     * SQL 过滤器避免SQL 注入
-     * @param argumentResolvers
-     */
-    @Override
-    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-        argumentResolvers.add(new SqlFilterArgumentResolver());
     }
 
     /**

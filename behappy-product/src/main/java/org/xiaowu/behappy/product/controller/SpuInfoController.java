@@ -2,6 +2,7 @@ package org.xiaowu.behappy.product.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.xiaowu.behappy.api.product.vo.SpuSaveVo;
 import org.xiaowu.behappy.common.core.result.R;
 import org.xiaowu.behappy.common.mybatis.utils.PageUtils;
 import org.xiaowu.behappy.product.entity.SpuInfoEntity;
@@ -9,7 +10,8 @@ import org.xiaowu.behappy.product.service.SpuInfoService;
 
 import java.util.Arrays;
 import java.util.Map;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -79,9 +81,8 @@ public class SpuInfoController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("product:spuinfo:save")
-    public R save(@RequestBody SpuInfoEntity spuInfo){
-		spuInfoService.save(spuInfo);
-
+    public R save(@RequestBody SpuSaveVo vo){
+        spuInfoService.saveSupInfo(vo);
         return R.ok();
     }
 

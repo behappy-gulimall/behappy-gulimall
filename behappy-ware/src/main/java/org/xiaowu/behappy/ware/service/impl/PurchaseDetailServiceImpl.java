@@ -10,6 +10,7 @@ import org.xiaowu.behappy.ware.dao.PurchaseDetailDao;
 import org.xiaowu.behappy.ware.entity.PurchaseDetailEntity;
 import org.xiaowu.behappy.ware.service.PurchaseDetailService;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -26,4 +27,12 @@ public class PurchaseDetailServiceImpl extends ServiceImpl<PurchaseDetailDao, Pu
         return new PageUtils(page);
     }
 
+    @Override
+    public List<PurchaseDetailEntity> listDetailByPurchaseId(Long id) {
+
+        List<PurchaseDetailEntity> purchaseId = this.list(
+                new QueryWrapper<PurchaseDetailEntity>().eq("purchase_id", id));
+
+        return purchaseId;
+    }
 }

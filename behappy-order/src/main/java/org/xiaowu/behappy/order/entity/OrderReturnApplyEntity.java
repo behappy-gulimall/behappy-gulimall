@@ -1,5 +1,7 @@
 package org.xiaowu.behappy.order.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -42,6 +44,7 @@ public class OrderReturnApplyEntity implements Serializable {
 	/**
 	 * 申请时间
 	 */
+	@TableField(fill = FieldFill.INSERT)
 	private Date createTime;
 	/**
 	 * 会员用户名

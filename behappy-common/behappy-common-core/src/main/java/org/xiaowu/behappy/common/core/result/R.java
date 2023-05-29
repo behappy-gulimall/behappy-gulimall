@@ -20,10 +20,14 @@ package org.xiaowu.behappy.common.core.result;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.TypeReference;
 import org.apache.hc.core5.http.HttpStatus;
+import org.xiaowu.behappy.common.core.enums.BizCodeEnum;
 
 import java.io.Serial;
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.xiaowu.behappy.common.core.enums.BizCodeEnum.OK;
+
 
 /**
  * @author xiaowu
@@ -89,8 +93,8 @@ public class R extends HashMap<String, Object> {
     }
 
     public R() {
-        setCode(0);
-        setMsg("success");
+        setCode(OK.getCode());
+        setMsg(OK.getMessage());
     }
 
     public static R error() {
@@ -102,7 +106,7 @@ public class R extends HashMap<String, Object> {
     }
 
     public static R error(Throwable throwable) {
-        return error(ResultCodeEnum.FAIL.getCode(), throwable.getMessage());
+        return error(BizCodeEnum.UNKNOWN_EXCEPTION.getCode(), throwable.getMessage());
     }
 
     public static R error(int code, String msg) {

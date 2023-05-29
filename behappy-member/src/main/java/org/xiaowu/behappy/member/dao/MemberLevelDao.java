@@ -14,4 +14,6 @@ import org.xiaowu.behappy.member.entity.MemberLevelEntity;
 @Mapper
 public interface MemberLevelDao extends BaseMapper<MemberLevelEntity> {
 
+    MemberLevelEntity getDefaultLevel();
+
 }

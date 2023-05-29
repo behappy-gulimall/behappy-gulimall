@@ -1,6 +1,7 @@
 package org.xiaowu.behappy.product.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.xiaowu.behappy.api.product.vo.SpuSaveVo;
 import org.xiaowu.behappy.common.mybatis.utils.PageUtils;
 import org.xiaowu.behappy.product.entity.SpuInfoEntity;
 
@@ -20,5 +21,7 @@ public interface SpuInfoService extends IService<SpuInfoEntity> {
     SpuInfoEntity getSpuInfoBySkuId(Long skuId);
 
     void up(Long spuId);
+
+    void saveSupInfo(SpuSaveVo vo);
 }
 

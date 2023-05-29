@@ -8,6 +8,7 @@ import org.xiaowu.behappy.member.entity.MemberReceiveAddressEntity;
 import org.xiaowu.behappy.member.service.MemberReceiveAddressService;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 
@@ -24,6 +25,18 @@ import java.util.Map;
 @RequestMapping("member/memberreceiveaddress")
 public class MemberReceiveAddressController {
     private final MemberReceiveAddressService memberReceiveAddressService;
+
+    /**
+     * 根据会员id查询会员的所有地址
+     * @param memberId
+     * @return
+     */
+    @GetMapping(value = "/{memberId}/address")
+    public List<MemberReceiveAddressEntity> getAddress(@PathVariable("memberId") Long memberId) {
+
+        List<MemberReceiveAddressEntity> addressList = memberReceiveAddressService.getAddress(memberId);
+        return addressList;
+    }
 
     /**
      * 列表

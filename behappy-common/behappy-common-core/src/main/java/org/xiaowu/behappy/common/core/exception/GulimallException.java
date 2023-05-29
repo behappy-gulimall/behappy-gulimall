@@ -3,7 +3,7 @@ package org.xiaowu.behappy.common.core.exception;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.xiaowu.behappy.common.core.result.ResultCodeEnum;
+import org.xiaowu.behappy.common.core.enums.BizCodeEnum;
 
 /**
  * 自定义全局异常类
@@ -29,11 +29,11 @@ public class GulimallException extends RuntimeException {
 
     /**
      * 接收枚举类型对象
-     * @param resultCodeEnum
+     * @param bizCodeEnum
      */
-    public GulimallException(ResultCodeEnum resultCodeEnum) {
-        super(resultCodeEnum.getMessage());
-        this.code = resultCodeEnum.getCode();
+    public GulimallException(BizCodeEnum bizCodeEnum) {
+        super(bizCodeEnum.getMessage());
+        this.code = bizCodeEnum.getCode();
     }
 
     @Override

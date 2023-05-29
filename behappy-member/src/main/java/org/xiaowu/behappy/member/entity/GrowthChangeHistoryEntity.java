@@ -1,5 +1,7 @@
 package org.xiaowu.behappy.member.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -33,6 +35,7 @@ public class GrowthChangeHistoryEntity implements Serializable {
 	/**
 	 * create_time
 	 */
+	@TableField(fill = FieldFill.INSERT)
 	private Date createTime;
 	/**
 	 * 改变的值（正负计数）

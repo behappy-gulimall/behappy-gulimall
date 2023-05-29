@@ -38,6 +38,13 @@ public class ProductAttrValueServiceImpl extends ServiceImpl<ProductAttrValueDao
     }
 
 
+    @Override
+    public void saveProductAttr(List<ProductAttrValueEntity> collect) {
+        super.saveBatch(collect);
+    }
+
+
+
     /**
      * 修改商品规格
      * @param spuId

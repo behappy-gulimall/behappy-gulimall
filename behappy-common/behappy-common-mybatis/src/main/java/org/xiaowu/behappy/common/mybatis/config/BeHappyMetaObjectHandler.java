@@ -40,8 +40,7 @@ public class BeHappyMetaObjectHandler implements MetaObjectHandler {
     private boolean needConvertUpdateTime(MetaObject metaObject) {
         boolean updateTimeHasSetter = metaObject.hasSetter("updateTime");
         Object updateTimeHasVal = getFieldValByName("updateTime", metaObject);
-        boolean flag = updateTimeHasSetter && updateTimeHasVal == null;
-        return flag;
+        return updateTimeHasSetter && updateTimeHasVal == null;
     }
 
     private boolean needConvertCreateTime(MetaObject metaObject) {
@@ -49,8 +48,7 @@ public class BeHappyMetaObjectHandler implements MetaObjectHandler {
         boolean createTimeHasSetter = metaObject.hasSetter("createTime");
         // 如果预先自己设置了值,则设置不使用MP的自动填充
         Object createTimeHasVal = getFieldValByName("createTime", metaObject);
-        boolean flag = createTimeHasSetter && createTimeHasVal == null;
-        return flag;
+        return createTimeHasSetter && createTimeHasVal == null;
     }
 
     private Class<?> getCreateTimeType(MetaObject metaObject) {

@@ -2,6 +2,11 @@ package org.xiaowu.behappy.member.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.xiaowu.behappy.api.member.vo.MemberUserLoginVo;
+import org.xiaowu.behappy.api.member.vo.MemberUserRegisterVo;
+import org.xiaowu.behappy.api.member.vo.SocialUser;
+import org.xiaowu.behappy.common.core.enums.BizCodeEnum;
+import org.xiaowu.behappy.common.core.exception.GulimallException;
 import org.xiaowu.behappy.common.core.result.R;
 import org.xiaowu.behappy.common.mybatis.utils.PageUtils;
 import org.xiaowu.behappy.member.entity.MemberEntity;
@@ -24,6 +29,37 @@ import java.util.Map;
 @RequestMapping("member/member")
 public class MemberController {
     private final MemberService memberService;
+
+
+    @PostMapping(value = "/register")
+    public R register(@RequestBody MemberUserRegisterVo vo) {
+
+        memberService.register(vo);
+        return R.ok();
+    }
+
+    @PostMapping(value = "/login")
+    public R login(@RequestBody MemberUserLoginVo vo) {
+
+        MemberEntity memberEntity = memberService.login(vo);
+        if (memberEntity != null) {
+            return R.ok().setData(memberEntity);
+        } else {
+            return R.error(BizCodeEnum.LOGINACCT_PASSWORD_EXCEPTION.getCode(),BizCodeEnum.LOGINACCT_PASSWORD_EXCEPTION.getMessage());
+        }
+    }
+
+    @PostMapping(value = "/oauth2/login")
+    public R oauthLogin(@RequestBody SocialUser socialUser) throws Exception {
+
+        MemberEntity memberEntity = memberService.login(socialUser);
+
+        if (memberEntity != null) {
+            return R.ok().setData(memberEntity);
+        } else {
+            return R.error(BizCodeEnum.LOGINACCT_PASSWORD_EXCEPTION.getCode(),BizCodeEnum.LOGINACCT_PASSWORD_EXCEPTION.getMessage());
+        }
+    }
 
     /**
      * 列表

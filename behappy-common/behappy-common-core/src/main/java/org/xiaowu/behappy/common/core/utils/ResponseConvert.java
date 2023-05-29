@@ -6,9 +6,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.xiaowu.behappy.common.core.enums.BizCodeEnum;
 import org.xiaowu.behappy.common.core.exception.GulimallException;
 import org.xiaowu.behappy.common.core.result.R;
-import org.xiaowu.behappy.common.core.result.ResultCodeEnum;
 
 /**
  * @author 小五
@@ -35,7 +35,7 @@ public class ResponseConvert {
             return objectMapper.readValue(objectMapper.writeValueAsString(r.getData()), type);
         } catch (JsonProcessingException e) {
             log.error("Response转换：序列化错误");
-            throw new GulimallException( ResultCodeEnum.FAIL.getCode(), e.getMessage());
+            throw new GulimallException(BizCodeEnum.UNKNOWN_EXCEPTION.getCode(), e.getMessage());
         } catch (GulimallException e) {
             throw e;
         } catch (Exception e) {

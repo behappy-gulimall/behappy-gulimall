@@ -1,5 +1,7 @@
 package org.xiaowu.behappy.member.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -93,6 +95,7 @@ public class MemberEntity implements Serializable {
 	/**
 	 * 注册时间
 	 */
+	@TableField(fill = FieldFill.INSERT)
 	private Date createTime;
 	/**
 	 * 社交用户的唯一id
@@ -105,6 +108,6 @@ public class MemberEntity implements Serializable {
 	/**
 	 * 访问令牌的时间
 	 */
-	private String expiresIn;
+	private Long expiresIn;
 
 }
