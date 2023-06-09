@@ -16,5 +16,9 @@ import java.util.Map;
 public interface OrderService extends IService<OrderEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    OrderEntity getOrderByOrderSn(String orderSn);
+
+    PageUtils queryPageWithItem(Map<String, Object> params);
 }
 

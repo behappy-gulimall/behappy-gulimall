@@ -2,6 +2,7 @@ package org.xiaowu.behappy.ware.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.xiaowu.behappy.api.ware.vo.FareVo;
 import org.xiaowu.behappy.common.core.result.R;
 import org.xiaowu.behappy.common.mybatis.utils.PageUtils;
 import org.xiaowu.behappy.ware.entity.WareInfoEntity;
@@ -24,6 +25,18 @@ import java.util.Map;
 @RequestMapping("ware/wareinfo")
 public class WareInfoController {
     private final WareInfoService wareInfoService;
+
+    /**
+     * 获取运费信息
+     * @return
+     */
+    @GetMapping(value = "/fare")
+    public R getFare(@RequestParam("addrId") Long addrId) {
+
+        FareVo fare = wareInfoService.getFare(addrId);
+
+        return R.ok().setData(fare);
+    }
 
     /**
      * 列表

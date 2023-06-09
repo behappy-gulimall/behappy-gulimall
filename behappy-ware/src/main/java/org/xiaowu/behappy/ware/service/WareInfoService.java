@@ -1,6 +1,7 @@
 package org.xiaowu.behappy.ware.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.xiaowu.behappy.api.ware.vo.FareVo;
 import org.xiaowu.behappy.common.mybatis.utils.PageUtils;
 import org.xiaowu.behappy.ware.entity.WareInfoEntity;
 
@@ -16,5 +17,7 @@ import java.util.Map;
 public interface WareInfoService extends IService<WareInfoEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    FareVo getFare(Long addrId);
 }
 

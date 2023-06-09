@@ -54,6 +54,7 @@ public class PurchaseDetailController {
     @RequestMapping("/save")
     //@RequiresPermissions("ware:purchasedetail:save")
     public R save(@RequestBody PurchaseDetailEntity purchaseDetail){
+        purchaseDetail.setStatus(0);
 		purchaseDetailService.save(purchaseDetail);
 
         return R.ok();
