@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.xiaowu.behappy.api.ware.constants.WareConstant;
+import org.xiaowu.behappy.api.ware.constant.WareConstant;
 import org.xiaowu.behappy.api.ware.vo.MergeVo;
 import org.xiaowu.behappy.api.ware.vo.PurchaseDoneVo;
 import org.xiaowu.behappy.api.ware.vo.PurchaseItemDoneVo;

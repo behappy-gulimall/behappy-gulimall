@@ -33,16 +33,8 @@ public class ElasticSaveController {
      * @return
      */
     @PostMapping(value = "/product")
-    public R productStatusUp(@RequestBody List<SkuEsModel> skuEsModels) {
-
-        boolean status=false;
-        try {
-            status = productSaveService.productStatusUp(skuEsModels);
-        } catch (IOException e) {
-            //log.error("商品上架错误{}",e);
-            throw new GulimallException(BizCodeEnum.PRODUCT_UP_EXCEPTION);
-        }
-
+    public R productStatusUp(@RequestBody List<SkuEsModel> skuEsModels) throws IOException {
+        boolean status = productSaveService.productStatusUp(skuEsModels);
         if(status){
             throw new GulimallException(BizCodeEnum.PRODUCT_UP_EXCEPTION);
         }else {

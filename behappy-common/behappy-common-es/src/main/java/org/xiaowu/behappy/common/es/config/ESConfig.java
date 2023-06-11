@@ -2,6 +2,8 @@ package org.xiaowu.behappy.common.es.config;
 
 import lombok.Data;
 import org.apache.http.HttpHost;
+import org.elasticsearch.client.HttpAsyncResponseConsumerFactory;
+import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -75,5 +77,16 @@ public class ESConfig {
         return getFactory().getRhlClient();
     }
 
+
+    @Bean
+    @Scope("singleton")
+    public RequestOptions defaultRequestOptions() {
+        RequestOptions.Builder builder = RequestOptions.DEFAULT.toBuilder();
+//        builder.addHeader("Authorization", "Bearer " + TOKEN);
+//        builder.setHttpAsyncResponseConsumerFactory(
+//                new HttpAsyncResponseConsumerFactory
+//                        .HeapBufferedResponseConsumerFactory(30 * 1024 * 1024 * 1024));
+        return builder.build();
+    }
 }
 

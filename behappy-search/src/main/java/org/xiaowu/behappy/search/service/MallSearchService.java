@@ -1,8 +1,8 @@
 package org.xiaowu.behappy.search.service;
 
 import org.xiaowu.behappy.api.search.vo.SearchParam;
+import org.xiaowu.behappy.api.search.vo.SearchResult;
 
-import javax.naming.directory.SearchResult;
 
 public interface MallSearchService {
 

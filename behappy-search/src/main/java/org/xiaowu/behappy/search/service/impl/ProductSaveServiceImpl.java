@@ -12,7 +12,7 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.springframework.stereotype.Service;
 import org.xiaowu.behappy.api.common.vo.SkuEsModel;
-import org.xiaowu.behappy.search.config.BeHappyESConfig;
+import org.xiaowu.behappy.search.constant.EsConstant;
 import org.xiaowu.behappy.search.service.ProductSaveService;
 
 import java.io.IOException;
@@ -26,6 +26,8 @@ import java.util.stream.Collectors;
 public class ProductSaveServiceImpl implements ProductSaveService {
 
     private final RestHighLevelClient restHighLevelClient;
+
+    private final RequestOptions defaultRequestOptions;
 
     @Override
     public boolean productStatusUp(List<SkuEsModel> skuEsModels) throws IOException {
@@ -43,8 +45,7 @@ public class ProductSaveServiceImpl implements ProductSaveService {
             bulkRequest.add(indexRequest);
         }
 
-
-        BulkResponse bulk = restHighLevelClient.bulk(bulkRequest, RequestOptions.DEFAULT);
+        BulkResponse bulk = restHighLevelClient.bulk(bulkRequest, defaultRequestOptions);
 
         //TODO 如果批量错误
         boolean hasFailures = bulk.hasFailures();

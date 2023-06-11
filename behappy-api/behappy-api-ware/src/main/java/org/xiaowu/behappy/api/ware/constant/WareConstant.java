@@ -1,4 +1,4 @@
-package org.xiaowu.behappy.api.ware.constants;
+package org.xiaowu.behappy.api.ware.constant;
 
 /**
  * @author xiaowu

@@ -27,9 +27,9 @@ public class SkuSaleAttrValueController {
     private final SkuSaleAttrValueService skuSaleAttrValueService;
 
     @GetMapping(value = "/stringList/{skuId}")
-    public List<String> getSkuSaleAttrValues(@PathVariable("skuId") Long skuId) {
+    public R getSkuSaleAttrValues(@PathVariable("skuId") Long skuId) {
         List<String> stringList = skuSaleAttrValueService.getSkuSaleAttrValuesAsStringList(skuId);
-        return stringList;
+        return R.ok().setData(stringList);
     }
 
     /**
