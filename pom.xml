@@ -62,6 +62,8 @@
         <commons-codec.version>1.15</commons-codec.version>
         <!--https://mvnrepository.com/artifact/com.xuxueli/xxl-job-core-->
         <xxl-job.version>2.3.1</xxl-job.version>
+        <!--https://mvnrepository.com/artifact/org.elasticsearch.client/elasticsearch-rest-high-level-client-->
+        <elasticsearch.client.version>7.12.1</elasticsearch.client.version>
     </properties>
     <modules>
         <module>behappy-api</module>
@@ -116,6 +118,12 @@
                         <groupId>org.springframework.boot</groupId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <!--导入es的elasticsearch-rest-high-level-client-->
+            <dependency>
+                <groupId>org.elasticsearch.client</groupId>
+                <artifactId>elasticsearch-rest-high-level-client</artifactId>
+                <version>${elasticsearch.client.version}</version>
             </dependency>
             <!--监控服务端
             springboot admin client端相对简单,因为nacos自动帮我们整合了与admin的关联工作,只需要注册进nacos,并且与服务端保持在同一命名空间和分组下即可-->
@@ -268,6 +276,11 @@
             <dependency>
                 <groupId>org.xiaowu</groupId>
                 <artifactId>behappy-common-rmq</artifactId>
+                <version>${behappy.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.xiaowu</groupId>
+                <artifactId>behappy-common-es</artifactId>
                 <version>${behappy.version}</version>
             </dependency>
             <dependency>

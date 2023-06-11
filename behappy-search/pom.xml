@@ -29,6 +29,15 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>-->
+        <dependency>
+            <groupId>org.xiaowu</groupId>
+            <artifactId>behappy-api-search</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.xiaowu</groupId>
+            <artifactId>behappy-common-es</artifactId>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>
