@@ -102,15 +102,15 @@ public class HttpClientUtil {
     }
 
 
-    public static JSONObject doHttpGet(String uri, Map<String, Object> getParams, Map<String, Object> headers) {
+    public static JSONObject doHttpGet(String uri, Map<String, Object> urlParams, Map<String, Object> headers) {
         CloseableHttpResponse response = null;
         try {
             URIBuilder uriBuilder = new URIBuilder(uri);
             HttpGet httpGet = new HttpGet(uriBuilder.build());
             // params
-            if (null != getParams && !getParams.isEmpty()) {
+            if (null != urlParams && !urlParams.isEmpty()) {
                 List<NameValuePair> params = new ArrayList<>();
-                for (Map.Entry<String, Object> param : getParams.entrySet()) {
+                for (Map.Entry<String, Object> param : urlParams.entrySet()) {
                     params.add(new BasicNameValuePair(param.getKey(), StrUtil.toString(param.getValue())));
                 }
                 uriBuilder.setParameters(params);
@@ -144,14 +144,23 @@ public class HttpClientUtil {
         throw new GulimallException(BizCodeEnum.HTTP_ERROR_EXCEPTION);
     }
 
-    public static JSONObject doHttpPost(String uri, Map<String, Object> getParams, Map<String, Object> headers) {
+    public static JSONObject doHttpPost(String uri, Map<String, Object> urlParams, Map<String, Object> postParams, Map<String, Object> headers) {
         CloseableHttpResponse response = null;
         try {
-            HttpPost httpPost = new HttpPost(uri);
-            // params
-            if (null != getParams && !getParams.isEmpty()) {
+            URIBuilder uriBuilder = new URIBuilder(uri);
+            HttpPost httpPost = new HttpPost(uriBuilder.build());
+            // urlParams
+            if (null != urlParams && !urlParams.isEmpty()) {
                 List<NameValuePair> params = new ArrayList<>();
-                for (Map.Entry<String, Object> param : getParams.entrySet()) {
+                for (Map.Entry<String, Object> param : urlParams.entrySet()) {
+                    params.add(new BasicNameValuePair(param.getKey(), StrUtil.toString(param.getValue())));
+                }
+                uriBuilder.setParameters(params);
+            }
+            // postParams
+            if (null != postParams && !postParams.isEmpty()) {
+                List<NameValuePair> params = new ArrayList<>();
+                for (Map.Entry<String, Object> param : postParams.entrySet()) {
                     params.add(new BasicNameValuePair(param.getKey(), StrUtil.toString(param.getValue())));
                 }
                 HttpEntity httpEntity = new UrlEncodedFormEntity(params, StandardCharsets.UTF_8);

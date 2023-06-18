@@ -2,8 +2,13 @@ package org.xiaowu.behappy.api.member.feign;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.xiaowu.behappy.api.member.feign.factory.MemberFeignFactory;
+import org.xiaowu.behappy.api.member.vo.SocialUser;
+import org.xiaowu.behappy.api.member.vo.UserLoginVo;
+import org.xiaowu.behappy.api.member.vo.UserRegisterVo;
 import org.xiaowu.behappy.common.core.result.R;
 
 import static org.xiaowu.behappy.common.core.constants.ServiceConstants.MEMBER_SERVICE;
@@ -24,4 +29,13 @@ public interface MemberFeignService {
     @RequestMapping("/memberreceiveaddress/info/{id}")
     R info(@PathVariable("id") Long id);
 
+
+    @PostMapping("/member/regist")
+    R register(@RequestBody UserRegisterVo vo);
+
+    @PostMapping("/member/login")
+    R login(@RequestBody UserLoginVo vo);
+
+    @PostMapping("/member/oauth2/login")
+    R oauthLogin(@RequestBody SocialUser socialUser) throws Exception;
 }

@@ -46,6 +46,11 @@ public interface ServiceConstants {
      * 会员模块
      */
     String MEMBER_SERVICE = "behappy-member";
+
+    /**
+     * 第三方模块
+     */
+    String THIRD_PARTY_SERVICE = "behappy-third-party";
     /*-----------------------------------服务名称------------------------------*/
 
 }

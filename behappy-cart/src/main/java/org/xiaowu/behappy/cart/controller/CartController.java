@@ -14,6 +14,9 @@ import org.xiaowu.behappy.cart.service.CartService;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * @author xiaowu
+ */
 @Controller
 @RequiredArgsConstructor
 public class CartController {
@@ -48,7 +51,6 @@ public class CartController {
     public String cartListPage(Model model) throws ExecutionException, InterruptedException {
         //快速得到用户信息：id,user-key
         // UserInfoTo userInfoTo = CartInterceptor.toThreadLocal.get();
-
         CartVo cartVo = cartService.getCart();
         model.addAttribute("cart",cartVo);
         return "cartList";
@@ -65,7 +67,6 @@ public class CartController {
     public String addCartItem(@RequestParam("skuId") Long skuId,
                               @RequestParam("num") Integer num,
                               RedirectAttributes attributes) throws ExecutionException, InterruptedException {
-
         cartService.addToCart(skuId,num);
 
         attributes.addAttribute("skuId",skuId);
