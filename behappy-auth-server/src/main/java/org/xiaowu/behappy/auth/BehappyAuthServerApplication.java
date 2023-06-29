@@ -1,4 +1,4 @@
-package org.xiaowu.behappy.auth.server;
+package org.xiaowu.behappy.auth;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

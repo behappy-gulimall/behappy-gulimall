@@ -19,11 +19,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-undertow</artifactId>
         </dependency>
-        <!-- 整合springsession -->
-        <dependency>
-            <groupId>org.springframework.session</groupId>
-            <artifactId>spring-session-data-redis</artifactId>
-        </dependency>
         <!--注册中心客户端-->
         <!--<dependency>
             <groupId>com.alibaba.cloud</groupId>
@@ -46,11 +41,11 @@
             <groupId>org.xiaowu</groupId>
             <artifactId>behappy-api-member</artifactId>
         </dependency>
-
         <dependency>
             <groupId>io.github.wang-xiaowu</groupId>
             <artifactId>behappy-redis</artifactId>
         </dependency>
+
     </dependencies>
 
     <build>

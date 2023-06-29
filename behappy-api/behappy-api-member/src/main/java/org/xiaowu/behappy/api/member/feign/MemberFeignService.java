@@ -6,8 +6,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.xiaowu.behappy.api.member.feign.factory.MemberFeignFactory;
-import org.xiaowu.behappy.api.member.vo.SocialUser;
-import org.xiaowu.behappy.api.member.vo.UserLoginVo;
 import org.xiaowu.behappy.api.member.vo.UserRegisterVo;
 import org.xiaowu.behappy.common.core.result.R;
 
@@ -30,12 +28,8 @@ public interface MemberFeignService {
     R info(@PathVariable("id") Long id);
 
 
-    @PostMapping("/member/regist")
+    @PostMapping(value = "/member/register")
     R register(@RequestBody UserRegisterVo vo);
 
-    @PostMapping("/member/login")
-    R login(@RequestBody UserLoginVo vo);
 
-    @PostMapping("/member/oauth2/login")
-    R oauthLogin(@RequestBody SocialUser socialUser) throws Exception;
 }

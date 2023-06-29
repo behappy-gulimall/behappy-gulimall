@@ -18,7 +18,7 @@ public class ThirdPartFeignFallBack implements ThirdPartFeignService {
 
     @Override
     public R sendCode(String phone, String code) {
-        log.error("ThirdPartFeignFallBack - sendCode: {}-{}", phone,code);
+        log.error("ThirdPartFeignFallBack - sendCode: {}-{}", phone, code);
         return R.error(cause);
     }
 }
