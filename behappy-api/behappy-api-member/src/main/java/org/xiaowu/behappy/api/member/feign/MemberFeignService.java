@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.xiaowu.behappy.api.member.feign.factory.MemberFeignFactory;
+import org.xiaowu.behappy.api.member.vo.SocialUser;
 import org.xiaowu.behappy.api.member.vo.UserRegisterVo;
 import org.xiaowu.behappy.common.core.result.R;
 
@@ -31,5 +32,7 @@ public interface MemberFeignService {
     @PostMapping(value = "/member/register")
     R register(@RequestBody UserRegisterVo vo);
 
+    @PostMapping(value = "/member/oauth2/login")
+    R oauthLogin(SocialUser socialUser);
 
 }

@@ -60,14 +60,18 @@ public class HttpClientUtil {
                 public X509Certificate[] getAcceptedIssuers() {
                     return null;
                 }
+
                 @Override
-                public void checkClientTrusted(X509Certificate[] xcs, String str) {}
+                public void checkClientTrusted(X509Certificate[] xcs, String str) {
+                }
+
                 @Override
-                public void checkServerTrusted(X509Certificate[] xcs, String str) {}
+                public void checkServerTrusted(X509Certificate[] xcs, String str) {
+                }
             };
-            sslContext.init(null, new TrustManager[] { tm }, null);
+            sslContext.init(null, new TrustManager[]{tm}, null);
             Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder
-                    .<ConnectionSocketFactory> create()
+                    .<ConnectionSocketFactory>create()
                     .register("http", PlainConnectionSocketFactory.INSTANCE)
                     .register("https", new SSLConnectionSocketFactory(sslContext))
                     .build();
@@ -94,9 +98,7 @@ public class HttpClientUtil {
                     .setDefaultRequestConfig(requestConfig)
                     .setRetryStrategy(retryHandler)
                     .build();
-        } catch (KeyManagementException ex) {
-            throw new RuntimeException(ex);
-        } catch (NoSuchAlgorithmException ex) {
+        } catch (KeyManagementException | NoSuchAlgorithmException ex) {
             throw new RuntimeException(ex);
         }
     }
