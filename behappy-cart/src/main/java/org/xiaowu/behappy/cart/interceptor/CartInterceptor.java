@@ -23,7 +23,6 @@ import static org.xiaowu.behappy.api.common.constant.AuthServerConstant.LOGIN_US
 
 public class CartInterceptor implements HandlerInterceptor {
 
-
     public static ThreadLocal<UserInfoTo> toThreadLocal = new ThreadLocal<>();
 
     /***

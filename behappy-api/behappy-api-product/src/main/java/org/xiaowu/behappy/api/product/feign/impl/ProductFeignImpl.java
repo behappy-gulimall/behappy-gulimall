@@ -1,20 +1,15 @@
-package org.xiaowu.behappy.api.product.feign.fallback;
+package org.xiaowu.behappy.api.product.feign.impl;
 
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 import org.xiaowu.behappy.api.product.feign.ProductFeignService;
 import org.xiaowu.behappy.common.core.result.R;
-
-import java.math.BigDecimal;
-import java.util.List;
 
 /**
  * @author xiaowu
  */
 @Slf4j
-@Component
-public class ProductFeignFallBack implements ProductFeignService {
+public class ProductFeignImpl implements ProductFeignService {
 
     @Setter
     Throwable cause;

@@ -8,7 +8,7 @@
     <contextName>${APP_NAME}</contextName>
     <springProperty name="APP_NAME" scope="context" source="spring.application.name"/>
     <!-- name的值是变量的名称，value的值时变量定义的值。通过定义的值会被插入到logger上下文中。定义变量后，可以使“${}”来使用变量。 -->
-    <property name="log.path" value="behappy-hosp/logs" />
+    <property name="log.path" value="behappy-auth-server/logs" />
     <!-- 彩色日志 -->
     <!-- 配置格式变量：CONSOLE_LOG_PATTERN 彩色日志格式 -->
     <!-- magenta:洋红 -->

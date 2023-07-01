@@ -1,8 +1,7 @@
-package org.xiaowu.behappy.api.member.feign.fallback;
+package org.xiaowu.behappy.api.member.feign.impl;
 
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 import org.xiaowu.behappy.api.member.feign.MemberFeignService;
 import org.xiaowu.behappy.api.member.vo.SocialUser;
 import org.xiaowu.behappy.api.member.vo.UserLoginVo;
@@ -13,8 +12,7 @@ import org.xiaowu.behappy.common.core.result.R;
  * @author xiaowu
  */
 @Slf4j
-@Component
-public class MemberFeignFallBack implements MemberFeignService {
+public class MemberFeignImpl implements MemberFeignService {
 
     @Setter
     Throwable cause;
@@ -38,7 +36,7 @@ public class MemberFeignFallBack implements MemberFeignService {
     }
 
     @Override
-    public R oauthLogin(SocialUser socialUser) throws Exception {
+    public R oauthLogin(SocialUser socialUser) {
         log.error("MemberFeignFallBack - oauthLogin: {}", socialUser);
         return R.error(cause);
     }

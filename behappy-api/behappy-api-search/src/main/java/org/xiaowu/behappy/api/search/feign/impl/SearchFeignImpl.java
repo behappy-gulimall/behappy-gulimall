@@ -1,8 +1,7 @@
-package org.xiaowu.behappy.api.search.feign.fallback;
+package org.xiaowu.behappy.api.search.feign.impl;
 
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 import org.xiaowu.behappy.api.common.vo.SkuEsModel;
 import org.xiaowu.behappy.api.search.feign.SearchFeignService;
 import org.xiaowu.behappy.common.core.result.R;
@@ -13,8 +12,7 @@ import java.util.List;
  * @author xiaowu
  */
 @Slf4j
-@Component
-public class SearchFeignFallBack implements SearchFeignService {
+public class SearchFeignImpl implements SearchFeignService {
 
     @Setter
     Throwable cause;

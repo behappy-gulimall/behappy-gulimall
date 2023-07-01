@@ -3,7 +3,7 @@ package org.xiaowu.behappy.api.ware.feign.factory;
 import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.stereotype.Component;
 import org.xiaowu.behappy.api.ware.feign.WareFeignService;
-import org.xiaowu.behappy.api.ware.feign.fallback.WareFeignFallBack;
+import org.xiaowu.behappy.api.ware.feign.impl.WareFeignImpl;
 
 /**
  * @author xiaowu
@@ -13,8 +13,8 @@ public class WareFeignFactory implements FallbackFactory<WareFeignService> {
 
     @Override
     public WareFeignService create(Throwable cause) {
-        WareFeignFallBack wareFeignFallBack = new WareFeignFallBack();
-        wareFeignFallBack.setCause(cause);
-        return wareFeignFallBack;
+        WareFeignImpl wareFeignImpl = new WareFeignImpl();
+        wareFeignImpl.setCause(cause);
+        return wareFeignImpl;
     }
 }

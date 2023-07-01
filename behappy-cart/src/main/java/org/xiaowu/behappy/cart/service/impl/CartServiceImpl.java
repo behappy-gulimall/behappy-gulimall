@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.xiaowu.behappy.api.cart.to.UserInfoTo;
 import org.xiaowu.behappy.api.cart.vo.CartItemVo;
@@ -18,14 +19,12 @@ import org.xiaowu.behappy.cart.service.CartService;
 import org.xiaowu.behappy.common.core.enums.BizCodeEnum;
 import org.xiaowu.behappy.common.core.exception.GulimallException;
 import org.xiaowu.behappy.common.core.result.R;
-import org.xiaowu.behappy.common.core.utils.ResponseConvert;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ThreadPoolExecutor;
 import java.util.stream.Collectors;
 
 import static org.xiaowu.behappy.api.cart.constant.CartConstant.CART_PREFIX;
@@ -40,7 +39,7 @@ public class CartServiceImpl implements CartService {
 
     private final ProductFeignService productFeignService;
 
-    private final ThreadPoolExecutor executor;
+    private final ThreadPoolTaskExecutor executor;
 
     @Override
     public CartItemVo addToCart(Long skuId, Integer num) throws ExecutionException, InterruptedException {

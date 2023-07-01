@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * @author xiaowu
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "org.xiaowu.behappy")
 public class BehappyGatewayApplication {
 
     public static void main(String[] args) {

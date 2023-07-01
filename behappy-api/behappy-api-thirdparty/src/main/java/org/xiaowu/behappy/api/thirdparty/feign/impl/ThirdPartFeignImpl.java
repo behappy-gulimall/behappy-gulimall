@@ -1,8 +1,7 @@
-package org.xiaowu.behappy.api.thirdparty.feign.fallback;
+package org.xiaowu.behappy.api.thirdparty.feign.impl;
 
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 import org.xiaowu.behappy.api.thirdparty.feign.ThirdPartFeignService;
 import org.xiaowu.behappy.common.core.result.R;
 
@@ -10,8 +9,7 @@ import org.xiaowu.behappy.common.core.result.R;
  * @author xiaowu
  */
 @Slf4j
-@Component
-public class ThirdPartFeignFallBack implements ThirdPartFeignService {
+public class ThirdPartFeignImpl implements ThirdPartFeignService {
 
     @Setter
     Throwable cause;

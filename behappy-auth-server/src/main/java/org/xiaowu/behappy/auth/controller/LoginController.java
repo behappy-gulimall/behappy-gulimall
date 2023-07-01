@@ -2,6 +2,8 @@ package org.xiaowu.behappy.auth.controller;
 
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.TypeReference;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.xiaowu.behappy.api.common.constant.AuthServerConstant;
+import org.xiaowu.behappy.api.common.vo.MemberResponseVo;
 import org.xiaowu.behappy.api.member.feign.MemberFeignService;
+import org.xiaowu.behappy.api.member.vo.UserLoginVo;
 import org.xiaowu.behappy.api.member.vo.UserRegisterVo;
 import org.xiaowu.behappy.api.thirdparty.feign.ThirdPartFeignService;
 import org.xiaowu.behappy.common.core.enums.BizCodeEnum;
@@ -26,13 +30,15 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import static org.xiaowu.behappy.api.common.constant.AuthServerConstant.LOGIN_USER;
+
 /**
  * @author xiaowu
  */
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-public class LoginAndRegisterController {
+public class LoginController {
 
     private final ThirdPartFeignService thirdPartFeignService;
 
@@ -131,6 +137,45 @@ public class LoginAndRegisterController {
             attributes.addFlashAttribute("errors",errors);
             return "redirect:http://auth.gulimall.com/reg.html";
         }
+    }
+
+    @GetMapping(value = "/login.html")
+    public String loginPage(HttpSession session) {
+
+        //从session先取出来用户的信息，判断用户是否已经登录过了
+        Object attribute = session.getAttribute(LOGIN_USER);
+        //如果用户没登录那就跳转到登录页面
+        if (attribute == null) {
+            return "login";
+        } else {
+            return "redirect:http://gulimall.com";
+        }
+
+    }
+
+    @PostMapping(value = "/login")
+    public String login(UserLoginVo vo, RedirectAttributes attributes, HttpSession session) {
+
+        //远程登录
+        R login = memberFeignService.login(vo);
+
+        if (login.getCode() == 0) {
+            MemberResponseVo data = login.getData("data", new TypeReference<MemberResponseVo>() {});
+            session.setAttribute(LOGIN_USER,data);
+            return "redirect:http://gulimall.com";
+        } else {
+            Map<String,String> errors = new HashMap<>();
+            errors.put("msg",login.getData("msg",new TypeReference<String>(){}));
+            attributes.addFlashAttribute("errors",errors);
+            return "redirect:http://auth.gulimall.com/login.html";
+        }
+    }
+
+    @GetMapping(value = "/loguot.html")
+    public String logout(HttpServletRequest request) {
+        request.getSession().removeAttribute(LOGIN_USER);
+        request.getSession().invalidate();
+        return "redirect:http://gulimall.com";
     }
 
 }

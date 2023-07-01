@@ -10,12 +10,13 @@ import org.xiaowu.behappy.api.common.vo.MemberResponseVo;
 
 import java.io.PrintWriter;
 
+import static org.xiaowu.behappy.api.common.constant.AuthServerConstant.LOGIN_USER;
+
 
 /**
  * @author xiaowu
  * @Description: 登录拦截器
  **/
-@Component
 public class LoginUserInterceptor implements HandlerInterceptor {
 
     public static ThreadLocal<MemberResponseVo> loginUser = new ThreadLocal<>();
