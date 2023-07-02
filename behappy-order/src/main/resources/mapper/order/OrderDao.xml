@@ -50,4 +50,10 @@
     </resultMap>
 
 
+    <update id="updateOrderStatus">
+        UPDATE oms_order
+        SET `status` = #{code},modify_time = NOW(),pay_type = #{payType},payment_time = NOW()
+        WHERE order_sn = #{orderSn}
+    </update>
+
 </mapper>

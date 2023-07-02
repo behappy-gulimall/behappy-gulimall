@@ -44,14 +44,16 @@
         <behappy-redis.version>3.1.0</behappy-redis.version>
         <!--https://mvnrepository.com/artifact/io.github.behappy-project/behappy-canal-spring-boot-starter -->
         <behappy-canal.version>3.0.2</behappy-canal.version>
-        <!--https://mvnrepository.com/artifact/com.github.wxpay/wxpay-sdk -->
-        <wx-pay.version>0.0.3</wx-pay.version>
+        <!--https://mvnrepository.com/artifact/cn.springboot/best-pay-sdk -->
+        <best.pay.version>1.3.7</best.pay.version>
         <!--https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
         <hutool.version>5.8.20</hutool.version>
         <!--https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-boot-starter -->
         <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
         <!--https://mvnrepository.com/artifact/com.aliyun.oss/aliyun-sdk-oss -->
-        <alipay.sdk.oss.version>3.16.3</alipay.sdk.oss.version>
+        <aliyun.sdk.oss.version>3.17.0</aliyun.sdk.oss.version>
+        <!--https://mvnrepository.com/artifact/com.alipay.sdk/alipay-sdk-java -->
+        <alipay.sdk.version>4.38.4.ALL</alipay.sdk.version>
         <!--https://mvnrepository.com/artifact/net.logstash.logback/logstash-logback-encoder -->
         <logstash.logback.version>7.3</logstash.logback.version>
         <!--https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations -->
@@ -160,7 +162,14 @@
             <dependency>
                 <groupId>com.aliyun.oss</groupId>
                 <artifactId>aliyun-sdk-oss</artifactId>
-                <version>${alipay.sdk.oss.version}</version>
+                <version>${aliyun.sdk.oss.version}</version>
+            </dependency>
+            <!-- 支付宝sdk -->
+            <!-- https://mvnrepository.com/artifact/com.alipay.sdk/alipay-sdk-java -->
+            <dependency>
+                <groupId>com.alipay.sdk</groupId>
+                <artifactId>alipay-sdk-java</artifactId>
+                <version>${alipay.sdk.version}</version>
             </dependency>
             <!-- 日期工具栏依赖 -->
             <dependency>
@@ -249,9 +258,9 @@
                 <version>${behappy-canal.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.github.wxpay</groupId>
-                <artifactId>wxpay-sdk</artifactId>
-                <version>${wx-pay.version}</version>
+                <groupId>cn.springboot</groupId>
+                <artifactId>best-pay-sdk</artifactId>
+                <version>${best.pay.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.xiaowu</groupId>
@@ -266,6 +275,11 @@
             <dependency>
                 <groupId>org.xiaowu</groupId>
                 <artifactId>behappy-common-mybatis</artifactId>
+                <version>${behappy.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.xiaowu</groupId>
+                <artifactId>behappy-common-pay</artifactId>
                 <version>${behappy.version}</version>
             </dependency>
             <dependency>

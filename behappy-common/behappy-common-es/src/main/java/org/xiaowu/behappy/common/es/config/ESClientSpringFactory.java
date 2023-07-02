@@ -1,6 +1,7 @@
 package org.xiaowu.behappy.common.es.config;
 
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -21,6 +22,7 @@ import java.security.cert.X509Certificate;
 /**
  * @author 小五
  */
+@Slf4j
 public class ESClientSpringFactory {
 
     /*-----------------------默认配置---------------------*/
@@ -77,7 +79,7 @@ public class ESClientSpringFactory {
         setMutiConnectConfig();
         restClient = builder.build();
         restHighLevelClient = new RestHighLevelClient(builder);
-        System.out.println("init factory");
+        log.debug("init factory");
     }
 
     // 配置连接时间延时
@@ -144,6 +146,6 @@ public class ESClientSpringFactory {
             } catch (IOException ignore) {
             }
         }
-        System.out.println("close client");
+        log.debug("close client");
     }
 }

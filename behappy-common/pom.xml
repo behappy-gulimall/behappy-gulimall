@@ -16,6 +16,7 @@
         <module>behappy-common-sentinel</module>
         <module>behappy-common-seata</module>
         <module>behappy-common-es</module>
+        <module>behappy-common-pay</module>
     </modules>
 
 </project>

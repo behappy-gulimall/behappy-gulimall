@@ -1,4 +1,4 @@
-package org.xiaowu.behappy.auth.controller;
+package org.xiaowu.behappy.auth.web;
 
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.TypeReference;

@@ -10,6 +10,10 @@
     <artifactId>behappy-gateway</artifactId>
     <description>behappy-gateway</description>
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-gateway</artifactId>
+        </dependency>
         <!-- gateway网关整合sentinel进行限流降级 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>

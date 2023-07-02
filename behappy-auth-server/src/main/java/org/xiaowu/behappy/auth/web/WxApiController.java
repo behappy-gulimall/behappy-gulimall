@@ -1,4 +1,4 @@
-package org.xiaowu.behappy.auth.controller;
+package org.xiaowu.behappy.auth.web;
 
 /**
  * @author xiaowu
