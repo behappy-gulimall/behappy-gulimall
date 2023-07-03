@@ -18,7 +18,7 @@ import org.springframework.http.HttpHeaders;
 
 /**
  * http://localhost:8088/swagger-ui.html
- * @author 94391
+ * @author xiaowu
  */
 @Data
 @ConditionalOnExpression("#{'dev'.equals('${spring.profiles.active:}')}")

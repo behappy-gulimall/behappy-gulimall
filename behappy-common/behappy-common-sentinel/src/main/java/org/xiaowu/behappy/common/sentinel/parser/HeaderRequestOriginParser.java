@@ -6,7 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * sentinel 请求头解析判断
- * @author 94391
+ * @author xiaowu
  */
 public class HeaderRequestOriginParser implements RequestOriginParser {
 

@@ -40,4 +40,10 @@ public class MemberFeignImpl implements MemberFeignService {
         log.error("MemberFeignFallBack - oauthLogin: {}", socialUser);
         return R.error(cause);
     }
+
+    @Override
+    public R getAddress(Long memberId) {
+        log.error("MemberFeignImpl - getAddress: {}", memberId);
+        return R.error(cause);
+    }
 }

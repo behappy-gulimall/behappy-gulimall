@@ -1,15 +1,15 @@
 package org.xiaowu.behappy.api.member.feign;
 
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.xiaowu.behappy.api.common.vo.MemberAddressVo;
 import org.xiaowu.behappy.api.member.feign.factory.MemberFeignFactory;
 import org.xiaowu.behappy.api.member.vo.SocialUser;
 import org.xiaowu.behappy.api.member.vo.UserLoginVo;
 import org.xiaowu.behappy.api.member.vo.UserRegisterVo;
 import org.xiaowu.behappy.common.core.result.R;
+
+import java.util.List;
 
 import static org.xiaowu.behappy.common.core.constants.ServiceConstants.MEMBER_SERVICE;
 
@@ -39,5 +39,12 @@ public interface MemberFeignService {
     @PostMapping(value = "/member/oauth2/login")
     R oauthLogin(SocialUser socialUser);
 
+    /**
+     * 查询当前用户的全部收货地址
+     * @param memberId
+     * @return
+     */
+    @GetMapping(value = "/memberreceiveaddress/{memberId}/address")
+    R getAddress(@PathVariable("memberId") Long memberId);
 
 }

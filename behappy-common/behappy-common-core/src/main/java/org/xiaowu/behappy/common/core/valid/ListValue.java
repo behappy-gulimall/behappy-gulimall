@@ -11,7 +11,7 @@ import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * @author 94391
+ * @author xiaowu
  * @Description: 自定义注解规则
  **/
 

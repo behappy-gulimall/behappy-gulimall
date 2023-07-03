@@ -68,4 +68,13 @@ public interface ProductFeignService {
     @GetMapping(value = "/skuinfo/{skuId}/price")
     R getPrice(@PathVariable("skuId") Long skuId);
 
+    /**
+     * 根据skuId查询spu的信息
+     * @param skuId
+     * @return
+     */
+    @GetMapping(value = "/spuinfo/skuId/{skuId}")
+    R getSpuInfoBySkuId(@PathVariable("skuId") Long skuId);
+
+
 }

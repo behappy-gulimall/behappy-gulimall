@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * @author 94391
+ * @author xiaowu
  * @Description:
  **/
 public class ListValueConstraintValidator implements ConstraintValidator<ListValue,Integer> {

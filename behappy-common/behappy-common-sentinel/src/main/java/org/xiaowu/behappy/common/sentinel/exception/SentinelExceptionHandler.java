@@ -15,7 +15,7 @@ import static org.xiaowu.behappy.common.core.constants.CommonConstants.CONTENT_T
 
 /**
  * 自定义异常拦截
- * @author 94391
+ * @author xiaowu
  */
 public class SentinelExceptionHandler implements BlockExceptionHandler {
 

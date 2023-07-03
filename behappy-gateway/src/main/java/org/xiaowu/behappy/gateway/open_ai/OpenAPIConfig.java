@@ -17,7 +17,7 @@ import static org.xiaowu.behappy.common.core.open_api.OpenAPIConfig.API_URI;
 
 /**
  * http://localhost:8088/swagger-ui.html
- * @author 94391
+ * @author xiaowu
  */
 @ConditionalOnExpression("#{'dev'.equals('${spring.profiles.active:}')}")
 @Configuration

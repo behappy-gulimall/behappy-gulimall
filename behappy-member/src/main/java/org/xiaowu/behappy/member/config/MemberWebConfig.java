@@ -6,6 +6,9 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.xiaowu.behappy.member.interceptor.LoginUserInterceptor;
 
+/**
+ * @author 94391
+ */
 @Configuration
 public class MemberWebConfig implements WebMvcConfigurer {
 

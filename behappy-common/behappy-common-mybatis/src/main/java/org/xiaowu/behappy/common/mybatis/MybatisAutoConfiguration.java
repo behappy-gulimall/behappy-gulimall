@@ -74,8 +74,11 @@ public class MybatisAutoConfiguration implements WebMvcConfigurer {
         // 对于单一数据库类型来说,都建议配置该值,避免每次分页都去抓取数据库类型
         innerInterceptor.setDbType(DbType.MYSQL);
         innerInterceptor.setDialect(new MySqlDialect());
+        // 设置请求的页面大于最大页后操作， true调回到首页，false 继续请求 默认false
         // 如果查询当前页大于总页数，则置为第一页
         innerInterceptor.setOverflow(true);
+        // 设置最大单页限制数量，默认 500 条，-1 不受限制
+        innerInterceptor.setMaxLimit(1000L);
         interceptor.addInnerInterceptor(innerInterceptor);
         // 乐观锁插件
         interceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());

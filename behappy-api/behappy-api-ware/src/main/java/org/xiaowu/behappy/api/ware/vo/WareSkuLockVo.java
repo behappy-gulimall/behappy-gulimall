@@ -1,6 +1,7 @@
 package org.xiaowu.behappy.api.ware.vo;
 
 import lombok.Data;
+import org.xiaowu.behappy.api.common.vo.OrderItemVo;
 
 import java.util.List;
 

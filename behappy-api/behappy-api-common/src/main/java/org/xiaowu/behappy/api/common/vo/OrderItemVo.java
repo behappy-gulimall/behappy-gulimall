@@ -1,10 +1,13 @@
-package org.xiaowu.behappy.api.ware.vo;
+package org.xiaowu.behappy.api.common.vo;
 
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.List;
 
+/**
+ * @author xiaowu
+ */
 @Data
 public class OrderItemVo {
 

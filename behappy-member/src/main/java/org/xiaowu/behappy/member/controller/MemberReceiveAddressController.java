@@ -32,10 +32,9 @@ public class MemberReceiveAddressController {
      * @return
      */
     @GetMapping(value = "/{memberId}/address")
-    public List<MemberReceiveAddressEntity> getAddress(@PathVariable("memberId") Long memberId) {
-
+    public R getAddress(@PathVariable("memberId") Long memberId) {
         List<MemberReceiveAddressEntity> addressList = memberReceiveAddressService.getAddress(memberId);
-        return addressList;
+        return R.ok().setData(addressList);
     }
 
     /**

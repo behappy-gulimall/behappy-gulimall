@@ -51,6 +51,16 @@ public interface ServiceConstants {
      * 第三方模块
      */
     String THIRD_PARTY_SERVICE = "behappy-third-party";
+
+    /**
+     * 购物车模块
+     */
+    String CART_SERVICE = "behappy-cart";
+
+    /**
+     * 订单模块
+     */
+    String ORDER_SERVICE = "behappy-order";
     /*-----------------------------------服务名称------------------------------*/
 
 }
