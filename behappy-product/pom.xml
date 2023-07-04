@@ -47,6 +47,10 @@
         </dependency>
         <dependency>
             <groupId>org.xiaowu</groupId>
+            <artifactId>behappy-api-seckill</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.xiaowu</groupId>
             <artifactId>behappy-common-mybatis</artifactId>
         </dependency>
         <dependency>

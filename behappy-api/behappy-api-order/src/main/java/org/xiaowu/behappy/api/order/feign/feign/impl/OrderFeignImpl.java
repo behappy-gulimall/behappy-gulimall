@@ -21,4 +21,10 @@ public class OrderFeignImpl implements OrderFeignService {
         log.error("OrderFeignImpl - listWithItem: {}", params);
         return R.error(cause);
     }
+
+    @Override
+    public R getOrderStatus(String orderSn) {
+        log.error("OrderFeignImpl - getOrderStatus: {}", orderSn);
+        return R.error(cause);
+    }
 }

@@ -38,6 +38,11 @@ public interface ServiceConstants {
     String COUPON_SERVICE = "behappy-coupon";
 
     /**
+     * 秒杀模块
+     */
+    String SECKILL_SERVICE = "behappy-seckill";
+
+    /**
      * 商品模块
      */
     String PRODUCT_SERVICE = "behappy-product";

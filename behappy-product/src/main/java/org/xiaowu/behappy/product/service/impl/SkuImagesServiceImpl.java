@@ -10,6 +10,7 @@ import org.xiaowu.behappy.product.dao.SkuImagesDao;
 import org.xiaowu.behappy.product.entity.SkuImagesEntity;
 import org.xiaowu.behappy.product.service.SkuImagesService;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -24,6 +25,13 @@ public class SkuImagesServiceImpl extends ServiceImpl<SkuImagesDao, SkuImagesEnt
         );
 
         return new PageUtils(page);
+    }
+
+    @Override
+    public List<SkuImagesEntity> getImagesBySkuId(Long skuId) {
+
+        List<SkuImagesEntity> imagesEntities = this.baseMapper.selectList(new QueryWrapper<SkuImagesEntity>().eq("sku_id", skuId));
+        return imagesEntities;
     }
 
 }

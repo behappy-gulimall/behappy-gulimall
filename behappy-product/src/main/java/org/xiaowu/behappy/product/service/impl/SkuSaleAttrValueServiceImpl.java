@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.xiaowu.behappy.api.product.vo.SkuItemSaleAttrVo;
 import org.xiaowu.behappy.common.mybatis.utils.PageUtils;
 import org.xiaowu.behappy.common.mybatis.utils.Query;
 import org.xiaowu.behappy.product.dao.SkuSaleAttrValueDao;
@@ -34,5 +35,14 @@ public class SkuSaleAttrValueServiceImpl extends ServiceImpl<SkuSaleAttrValueDao
         List<String> stringList = baseMapper.getSkuSaleAttrValuesAsStringList(skuId);
 
         return stringList;
+    }
+
+    @Override
+    public List<SkuItemSaleAttrVo> getSaleAttrBySpuId(Long spuId) {
+
+        SkuSaleAttrValueDao baseMapper = this.getBaseMapper();
+        List<SkuItemSaleAttrVo> saleAttrVos = baseMapper.getSaleAttrBySpuId(spuId);
+
+        return saleAttrVos;
     }
 }
