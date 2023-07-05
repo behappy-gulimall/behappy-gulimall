@@ -27,4 +27,10 @@ public class CouponFeignImpl implements CouponFeignService {
         log.error("CouponFeignFallBack - saveSkuReduction: {}", skuReductionTo);
         return R.error(cause);
     }
+
+    @Override
+    public R getLates3DaySession() {
+        log.error("CouponFeignImpl - getLates3DaySession: ", cause);
+        return R.error(cause);
+    }
 }

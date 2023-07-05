@@ -32,7 +32,6 @@ public class SnowflakeConfig {
     @Primary
     @Scope("singleton")
     public Snowflake snowflake() {
-        Snowflake snowflake = new Snowflake(machineId, dataCenterId, true);
-        return snowflake;
+        return new Snowflake(machineId, dataCenterId, true);
     }
 }

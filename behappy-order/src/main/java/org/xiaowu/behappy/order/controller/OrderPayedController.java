@@ -4,12 +4,11 @@ import com.alipay.api.AlipayApiException;
 import com.alipay.api.internal.util.AlipaySignature;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.xiaowu.behappy.api.order.vo.PayAsyncVo;
-import org.xiaowu.behappy.common.pay.config.AlipayTemplate;
+import org.xiaowu.behappy.common.pay.config.AlipayProperties;
 import org.xiaowu.behappy.order.service.OrderService;
 
 import java.io.UnsupportedEncodingException;
@@ -27,7 +26,7 @@ public class OrderPayedController {
 
     private final OrderService orderService;
 
-    private final AlipayTemplate alipayTemplate;
+    private final AlipayProperties alipayProperties;
 
     @PostMapping(value = "/payed/notify")
     public String handleAlipayed(PayAsyncVo asyncVo, HttpServletRequest request) throws AlipayApiException, UnsupportedEncodingException {
@@ -48,8 +47,8 @@ public class OrderPayedController {
             params.put(name, valueStr);
         }
 
-        boolean signVerified = AlipaySignature.rsaCheckV1(params, alipayTemplate.getAlipayPublicKey(),
-                alipayTemplate.getCharset(), alipayTemplate.getSignType()); //调用SDK验证签名
+        boolean signVerified = AlipaySignature.rsaCheckV1(params, alipayProperties.getAlipayPublicKey(),
+                alipayProperties.getCharset(), alipayProperties.getSignType()); //调用SDK验证签名
 
         if (signVerified) {
             System.out.println("签名验证成功...");

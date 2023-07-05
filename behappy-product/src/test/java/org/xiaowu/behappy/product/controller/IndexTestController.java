@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-public class IndexController {
+public class IndexTestController {
 
     private final RedissonClient redisson;
 

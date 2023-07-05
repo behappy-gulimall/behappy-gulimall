@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.xiaowu.behappy.common.core.result.R;
 
-import static org.xiaowu.behappy.common.core.constants.CommonConstants.CONTENT_TYPE;
+import static org.xiaowu.behappy.common.core.constant.CommonConstants.CONTENT_TYPE;
 
 /**
  * 自定义异常拦截

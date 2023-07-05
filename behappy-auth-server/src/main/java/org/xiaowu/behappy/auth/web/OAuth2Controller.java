@@ -1,5 +1,6 @@
 package org.xiaowu.behappy.auth.web;
 
+import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import com.alibaba.fastjson2.TypeReference;
 import jakarta.servlet.http.HttpSession;
@@ -22,6 +23,7 @@ import java.util.Map;
 import static org.xiaowu.behappy.api.common.constant.AuthServerConstant.LOGIN_USER;
 
 /**
+ * 处理社交登录请求
  * @author xiaowu
  */
 @Slf4j
@@ -43,7 +45,8 @@ public class OAuth2Controller {
 
         try {
             //1、根据用户授权返回的code换取access_token
-            JSONObject jsonObject = HttpClientUtil.doHttpPost("https://api.weibo.com/oauth2/access_token", map, null, null);
+            String resStr = HttpClientUtil.doHttpPost("https://api.weibo.com/oauth2/access_token", map, null, null);
+            JSONObject jsonObject = JSON.parseObject(resStr);
             //2、处理
             // 获取到access_token,转为通用社交登录对象
             SocialUser socialUser = jsonObject.toJavaObject(SocialUser.class);

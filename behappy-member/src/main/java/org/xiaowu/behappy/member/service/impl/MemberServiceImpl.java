@@ -1,7 +1,9 @@
 package org.xiaowu.behappy.member.service.impl;
 
+import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
+import com.alibaba.nacos.shaded.com.google.gson.Gson;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -99,7 +101,8 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> impl
             query.put("access_token",socialUser.getAccess_token());
             query.put("uid",socialUser.getUid());
 
-            JSONObject jsonObject = HttpClientUtil.doHttpGet("https://api.weibo.com/2/users/show.json", query, null);
+            String resStr = HttpClientUtil.doHttpGet("https://api.weibo.com/2/users/show.json", query, null);
+            JSONObject jsonObject = JSON.parseObject(resStr);
             //查询成功
             String name = jsonObject.getString("name");
             String gender = jsonObject.getString("gender");
@@ -144,6 +147,50 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> impl
         //保存数据
         this.baseMapper.insert(memberEntity);
     }
+    @Override
+    public MemberEntity login(String accessTokenInfo) {
+
+        //从accessTokenInfo中获取出来两个值 access_token 和 oppenid
+        //把accessTokenInfo字符串转换成map集合，根据map里面中的key取出相对应的value
+        cn.hutool.json.JSONObject accessMap = JSONUtil.parseObj(accessTokenInfo);
+        String accessToken = (String) accessMap.get("access_token");
+        String openid = (String) accessMap.get("openid");
+
+        //3、拿到access_token 和 oppenid，再去请求微信提供固定的API，获取到扫码人的信息
+        //TODO 查询数据库当前用用户是否曾经使用过微信登录
+
+        MemberEntity memberEntity = this.baseMapper.selectOne(new QueryWrapper<MemberEntity>().eq("social_uid", openid));
+
+        if (memberEntity == null) {
+            log.debug("新用户注册");
+            //访问微信的资源服务器，获取用户信息
+            String baseUserInfoUrl = "https://api.weixin.qq.com/sns/userinfo" +
+                    "?access_token=%s" +
+                    "&openid=%s";
+            String userInfoUrl = String.format(baseUserInfoUrl, accessToken, openid);
+            //发送请求
+            String resStr = HttpClientUtil.doHttpGet(userInfoUrl, null, null);
+            JSONObject userInfoMap = JSON.parseObject(resStr);
+            //昵称
+            String nickName = (String) userInfoMap.get("nickname");
+            //性别
+            Double sex = (Double) userInfoMap.get("sex");
+            //微信头像
+            String headimgurl = (String) userInfoMap.get("headimgurl");
+
+            //把扫码人的信息添加到数据库中
+            memberEntity = new MemberEntity();
+            memberEntity.setNickname(nickName);
+            memberEntity.setGender(sex.intValue());
+            memberEntity.setHeader(headimgurl);
+            memberEntity.setCreateTime(new Date());
+            memberEntity.setSocialUid(openid);
+            // register.setExpiresIn(socialUser.getExpires_in());
+            this.baseMapper.insert(memberEntity);
+        }
+        return memberEntity;
+    }
+
 
 
     private void checkPhoneUnique(String phone) throws GulimallException {

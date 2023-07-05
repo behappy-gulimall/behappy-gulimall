@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 @Data
 @Configuration
 @ConfigurationProperties(prefix = "alipay")
-public class AlipayTemplate {
+public class AlipayProperties {
 
     /**
      * 在支付宝创建的应用的id

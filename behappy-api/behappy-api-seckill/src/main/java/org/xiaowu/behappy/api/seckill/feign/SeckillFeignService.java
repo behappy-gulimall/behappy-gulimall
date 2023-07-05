@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.xiaowu.behappy.api.seckill.feign.factory.SeckillFeignFactory;
 import org.xiaowu.behappy.common.core.result.R;
 
-import static org.xiaowu.behappy.common.core.constants.ServiceConstants.SECKILL_SERVICE;
+import static org.xiaowu.behappy.common.core.constant.ServiceConstants.SECKILL_SERVICE;
 
 /**
  * @author xiaowu

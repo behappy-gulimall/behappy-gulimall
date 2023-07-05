@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.xiaowu.behappy.api.thirdparty.feign.factory.ThirdPartFeignFactory;
 import org.xiaowu.behappy.common.core.result.R;
 
-import static org.xiaowu.behappy.common.core.constants.ServiceConstants.THIRD_PARTY_SERVICE;
+import static org.xiaowu.behappy.common.core.constant.ServiceConstants.THIRD_PARTY_SERVICE;
 
 /**
  * @author xiaowu

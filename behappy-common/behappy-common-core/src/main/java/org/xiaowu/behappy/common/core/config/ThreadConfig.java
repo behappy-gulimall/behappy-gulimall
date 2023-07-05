@@ -59,9 +59,10 @@ public class ThreadConfig implements AsyncConfigurer {
         taskExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         // 任务结束再shutdown
         taskExecutor.setWaitForTasksToCompleteOnShutdown(true);
+        // 最多等待多长时间再shutdown
+        taskExecutor.setAwaitTerminationSeconds(awaitTerminationSeconds);
         // 线程最大空闲时间
         taskExecutor.setKeepAliveSeconds(keepAliveTime);
-        taskExecutor.setAwaitTerminationSeconds(awaitTerminationSeconds);
         taskExecutor.setThreadNamePrefix(namePrefix.concat("-"));
         // 交给spring托管的会自动初始化，因为实现了InitializingBean接口
         taskExecutor.initialize();

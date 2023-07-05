@@ -2,6 +2,7 @@ package org.xiaowu.behappy.coupon.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.xiaowu.behappy.api.common.to.SkuReductionTo;
 import org.xiaowu.behappy.common.core.result.R;
 import org.xiaowu.behappy.common.mybatis.utils.PageUtils;
 import org.xiaowu.behappy.coupon.entity.SkuFullReductionEntity;
@@ -24,6 +25,12 @@ import java.util.Map;
 @RequestMapping("coupon/skufullreduction")
 public class SkuFullReductionController {
     private final SkuFullReductionService skuFullReductionService;
+
+    @PostMapping("/saveinfo")
+    public R saveInfo(@RequestBody SkuReductionTo skuReductionTo){
+        skuFullReductionService.saveSkuReduction(skuReductionTo);
+        return R.ok();
+    }
 
     /**
      * 列表

@@ -3,13 +3,9 @@ package org.xiaowu.behappy.api.cart.feign.feign;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.xiaowu.behappy.api.cart.feign.feign.factory.CartFeignFactory;
-import org.xiaowu.behappy.api.common.vo.OrderItemVo;
 import org.xiaowu.behappy.common.core.result.R;
 
-import java.util.List;
-
-import static org.xiaowu.behappy.common.core.constants.ServiceConstants.CART_SERVICE;
-import static org.xiaowu.behappy.common.core.constants.ServiceConstants.WARE_SERVICE;
+import static org.xiaowu.behappy.common.core.constant.ServiceConstants.CART_SERVICE;
 
 /**
  * @author xiaowu

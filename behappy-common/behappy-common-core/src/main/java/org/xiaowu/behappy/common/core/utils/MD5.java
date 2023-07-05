@@ -1,7 +1,11 @@
 package org.xiaowu.behappy.common.core.utils;
 
+import org.xiaowu.behappy.common.core.exception.GulimallException;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
+import static org.xiaowu.behappy.common.core.enums.BizCodeEnum.MD5_ERROR;
 
 
 public final class MD5 {
@@ -24,8 +28,7 @@ public final class MD5 {
             }
             return new String(chars);
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            throw new RuntimeException("MD5加密出错！！+" + e);
+            throw new GulimallException(MD5_ERROR);
         }
     }
 

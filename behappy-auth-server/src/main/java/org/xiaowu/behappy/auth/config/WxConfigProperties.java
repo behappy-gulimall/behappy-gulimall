@@ -1,0 +1,17 @@
+package org.xiaowu.behappy.auth.config;
+
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
+
+@Data
+@Configuration
+@ConfigurationProperties(prefix = "wx.open")
+public class WxConfigProperties {
+
+    private String appId;
+
+    private String appSecret;
+
+    private String redirectUrl;
+}

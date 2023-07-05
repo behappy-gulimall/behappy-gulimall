@@ -27,6 +27,7 @@ import org.apache.hc.core5.http.message.BasicNameValuePair;
 import org.apache.hc.core5.net.URIBuilder;
 import org.apache.hc.core5.ssl.SSLContexts;
 import org.apache.hc.core5.util.Timeout;
+import org.springframework.util.StringUtils;
 import org.xiaowu.behappy.common.core.enums.BizCodeEnum;
 import org.xiaowu.behappy.common.core.exception.GulimallException;
 import org.xiaowu.behappy.common.core.result.R;
@@ -86,9 +87,9 @@ public class HttpClientUtil {
             // setConnectionRequestTimeout：从连接池中拿连接的等待超时时间
             // setResponseTimeout：发出请求后等待对端应答的超时时间
             RequestConfig requestConfig = RequestConfig.custom()
-                    .setConnectTimeout(Timeout.ofMilliseconds(600000))
-                    .setConnectionRequestTimeout(Timeout.ofMilliseconds(600000))
-                    .setResponseTimeout(Timeout.ofMilliseconds(600000))
+                    .setConnectTimeout(Timeout.ofMinutes(1L))
+                    .setConnectionRequestTimeout(Timeout.ofMinutes(1L))
+                    .setResponseTimeout(Timeout.ofMinutes(1L))
                     .build();
             // 重试处理器，StandardHttpRequestRetryHandler
             DefaultHttpRequestRetryStrategy retryHandler = new DefaultHttpRequestRetryStrategy();
@@ -104,7 +105,7 @@ public class HttpClientUtil {
     }
 
 
-    public static JSONObject doHttpGet(String uri, Map<String, Object> urlParams, Map<String, Object> headers) {
+    public static String doHttpGet(String uri, Map<String, Object> urlParams, Map<String, Object> headers) {
         CloseableHttpResponse response = null;
         try {
             URIBuilder uriBuilder = new URIBuilder(uri);
@@ -125,12 +126,22 @@ public class HttpClientUtil {
             }
             response = httpClient.execute(httpGet);
             int statusCode = response.getCode();
+            // 如果HttpStatus.SC_OK == statusCode，那么entity一定不为null
             if (HttpStatus.SC_OK == statusCode) {
+                // entity响应示例：
+                // HTTP/1.1 200 OK
+                // Date: Mon, 05 Jul 2023 10:40:00 GMT
+                // Server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips PHP/5.4.16
+                // Content-Length: 12
+                // Content-Type: text/plain; charset=UTF-8
+                //
+                // Hello World!
                 HttpEntity entity = response.getEntity();
                 if (null != entity) {
-                    String resStr = EntityUtils.toString(entity, StandardCharsets.UTF_8);
-                    return JSON.parseObject(resStr);
+                    return EntityUtils.toString(entity, StandardCharsets.UTF_8);
                 }
+            }else if (StrUtil.startWith(String.valueOf(statusCode), "20")){
+                return StrUtil.EMPTY;
             }
         } catch (Exception e) {
             log.error("CloseableHttpClient-get-请求异常: {}", e);
@@ -146,7 +157,7 @@ public class HttpClientUtil {
         throw new GulimallException(BizCodeEnum.HTTP_ERROR_EXCEPTION);
     }
 
-    public static JSONObject doHttpPost(String uri, Map<String, Object> urlParams, Map<String, Object> postParams, Map<String, Object> headers) {
+    public static String doHttpPost(String uri, Map<String, Object> urlParams, Map<String, Object> postParams, Map<String, Object> headers) {
         CloseableHttpResponse response = null;
         try {
             URIBuilder uriBuilder = new URIBuilder(uri);
@@ -176,12 +187,23 @@ public class HttpClientUtil {
             }
             response = httpClient.execute(httpPost);
             int statusCode = response.getCode();
+            // 如果HttpStatus.SC_OK == statusCode，那么entity一定不为null
             if (HttpStatus.SC_OK == statusCode) {
+                // entity响应示例：
+                // HTTP/1.1 200 OK
+                // Date: Mon, 05 Jul 2023 10:40:00 GMT
+                // Server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips PHP/5.4.16
+                // Content-Length: 12
+                // Content-Type: text/plain; charset=UTF-8
+                //
+                // Hello World!
                 HttpEntity entity = response.getEntity();
+                // 如果
                 if (null != entity) {
-                    String resStr = EntityUtils.toString(entity, StandardCharsets.UTF_8);
-                    return JSON.parseObject(resStr);
+                    return EntityUtils.toString(entity, StandardCharsets.UTF_8);
                 }
+            }else if (StrUtil.startWith(String.valueOf(statusCode), "20")){
+                return StrUtil.EMPTY;
             }
         } catch (Exception e) {
             log.error("CloseableHttpClient-post-请求异常: {}", e);

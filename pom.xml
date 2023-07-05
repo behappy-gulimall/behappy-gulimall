@@ -44,8 +44,8 @@
         <behappy-redis.version>3.1.0</behappy-redis.version>
         <!--https://mvnrepository.com/artifact/io.github.behappy-project/behappy-canal-spring-boot-starter -->
         <behappy-canal.version>3.0.2</behappy-canal.version>
-        <!--https://mvnrepository.com/artifact/cn.springboot/best-pay-sdk -->
-        <best.pay.version>1.3.7</best.pay.version>
+        <!--https://mvnrepository.com/artifact/com.github.wxpay/wxpay-sdk -->
+        <wx-pay.version>0.0.3</wx-pay.version>
         <!--https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
         <hutool.version>5.8.20</hutool.version>
         <!--https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-boot-starter -->
@@ -258,9 +258,9 @@
                 <version>${behappy-canal.version}</version>
             </dependency>
             <dependency>
-                <groupId>cn.springboot</groupId>
-                <artifactId>best-pay-sdk</artifactId>
-                <version>${best.pay.version}</version>
+                <groupId>com.github.wxpay</groupId>
+                <artifactId>wxpay-sdk</artifactId>
+                <version>${wx-pay.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.xiaowu</groupId>

@@ -10,7 +10,7 @@ import org.xiaowu.behappy.common.core.result.R;
 
 import java.util.Map;
 
-import static org.xiaowu.behappy.common.core.constants.ServiceConstants.ORDER_SERVICE;
+import static org.xiaowu.behappy.common.core.constant.ServiceConstants.ORDER_SERVICE;
 
 /**
  * @author xiaowu

@@ -60,6 +60,8 @@ import java.util.stream.Collectors;
 
 import static org.xiaowu.behappy.api.cart.constant.CartConstant.CART_PREFIX;
 import static org.xiaowu.behappy.api.order.constant.OrderConstant.USER_ORDER_TOKEN_PREFIX;
+import static org.xiaowu.behappy.common.core.enums.BizCodeEnum.ORDER_INVALID_EXCEPTION;
+import static org.xiaowu.behappy.common.core.enums.BizCodeEnum.RES_ISNULL_FROM_ORDER_EXCEPTION;
 
 
 /**
@@ -232,7 +234,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
 
         //签名效验
         PayResponse payResponse = bestPayService.asyncNotify(notifyData);
-        log.info("payResponse={}", payResponse);
+        log.info("payResponse: {}", payResponse);
 
         //2.金额效验（从数据库查订单）
         OrderEntity orderEntity = this.getOrderByOrderSn(payResponse.getOrderId());
@@ -241,13 +243,13 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         //比较严重(正常情况下是不会发生的)发出告警：钉钉、短信
         if (orderEntity == null) {
             //TODO 发出告警，钉钉，短信
-            throw new RuntimeException("通过订单编号查询出来的结果是null");
+            throw new GulimallException(RES_ISNULL_FROM_ORDER_EXCEPTION);
         }
 
         //判断订单状态状态是否为已支付或者是已取消
         Integer status = orderEntity.getStatus();
         if (status.equals(OrderStatusEnum.PAYED.getCode()) || status.equals(OrderStatusEnum.CANCLED.getCode())) {
-            throw new RuntimeException("该订单已失效,orderNo=" + payResponse.getOrderId());
+            throw new GulimallException(ORDER_INVALID_EXCEPTION.getCode(), "该订单已失效,orderNo=" + payResponse.getOrderId());
         }
 
         /*//判断金额是否一致,Double类型比较大小，精度问题不好控制

@@ -11,7 +11,7 @@ import org.xiaowu.behappy.common.core.result.R;
 
 import java.util.List;
 
-import static org.xiaowu.behappy.common.core.constants.ServiceConstants.WARE_SERVICE;
+import static org.xiaowu.behappy.common.core.constant.ServiceConstants.WARE_SERVICE;
 
 /**
  * @author xiaowu

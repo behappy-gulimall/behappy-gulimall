@@ -9,7 +9,7 @@ import org.xiaowu.behappy.common.core.result.R;
 
 import java.util.List;
 
-import static org.xiaowu.behappy.common.core.constants.ServiceConstants.SEARCH_SERVICE;
+import static org.xiaowu.behappy.common.core.constant.ServiceConstants.SEARCH_SERVICE;
 
 /**
  * @author xiaowu

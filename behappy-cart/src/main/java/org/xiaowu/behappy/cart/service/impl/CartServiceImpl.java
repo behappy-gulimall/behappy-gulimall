@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.xiaowu.behappy.api.cart.to.UserInfoTo;
 import org.xiaowu.behappy.api.cart.vo.CartItemVo;
 import org.xiaowu.behappy.api.cart.vo.CartVo;
-import org.xiaowu.behappy.api.cart.vo.SkuInfoVo;
+import org.xiaowu.behappy.api.common.vo.SkuInfoVo;
 import org.xiaowu.behappy.api.product.feign.ProductFeignService;
 import org.xiaowu.behappy.cart.interceptor.CartInterceptor;
 import org.xiaowu.behappy.cart.service.CartService;
@@ -266,12 +266,13 @@ public class CartServiceImpl implements CartService {
             //筛选出选中的
             cartItemVoList = cartItems.stream()
                     .filter(CartItemVo::getCheck)
-                    .peek(item -> {
+                    .map(item -> {
                         //更新为最新的价格（查询数据库）
                         R r = productFeignService.getPrice(item.getSkuId());
                         BigDecimal price = r.getData(new TypeReference<BigDecimal>() {
                         });
                         item.setPrice(price);
+                        return item;
                     })
                     .collect(Collectors.toList());
         }

@@ -1,4 +1,4 @@
-package org.xiaowu.behappy.api.cart.vo;
+package org.xiaowu.behappy.api.common.vo;
 
 import lombok.Data;
 

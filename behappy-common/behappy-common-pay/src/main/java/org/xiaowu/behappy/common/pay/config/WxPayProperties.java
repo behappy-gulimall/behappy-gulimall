@@ -10,8 +10,8 @@ import org.springframework.context.annotation.Configuration;
  */
 @Data
 @Configuration
-@ConfigurationProperties(prefix = "wx")
-public class WxAccountConfig {
+@ConfigurationProperties(prefix = "wxpay")
+public class WxPayProperties {
 
     private String appId;
 
@@ -22,5 +22,7 @@ public class WxAccountConfig {
     private String notifyUrl;
 
     private String returnUrl;
+
+    private String cert;
 
 }

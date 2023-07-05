@@ -43,4 +43,15 @@ public class ProductFeignImpl implements ProductFeignService {
         log.error("ProductFeignFallBack - getPrice: {}", skuId);
         return R.error(cause);
     }
+
+    @Override
+    public R getSpuInfoBySkuId(Long skuId) {
+        log.error("ProductFeignImpl - getSpuInfoBySkuId: {}", skuId);
+        return R.error(cause);
+    }
+
+    @Override
+    public R getSkuInfo(Long skuId) {
+        return null;
+    }
 }

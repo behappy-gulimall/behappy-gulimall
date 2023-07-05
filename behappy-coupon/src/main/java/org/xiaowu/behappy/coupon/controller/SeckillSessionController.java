@@ -8,6 +8,7 @@ import org.xiaowu.behappy.coupon.entity.SeckillSessionEntity;
 import org.xiaowu.behappy.coupon.service.SeckillSessionService;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 
@@ -24,6 +25,18 @@ import java.util.Map;
 @RequestMapping("coupon/seckillsession")
 public class SeckillSessionController {
     private final SeckillSessionService seckillSessionService;
+
+
+    /**
+     * 查询最近三天需要参加秒杀商品的信息
+     * @return
+     */
+    @GetMapping(value = "/latest3DaySession")
+    public R getLatest3DaySession() {
+
+        List<SeckillSessionEntity> seckillSessionEntities = seckillSessionService.getLatest3DaySession();
+        return R.ok().setData(seckillSessionEntities);
+    }
 
     /**
      * 列表

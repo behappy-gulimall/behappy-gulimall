@@ -7,10 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.xiaowu.behappy.api.product.feign.factory.ProductFeignFactory;
 import org.xiaowu.behappy.common.core.result.R;
 
-import java.math.BigDecimal;
-import java.util.List;
-
-import static org.xiaowu.behappy.common.core.constants.ServiceConstants.PRODUCT_SERVICE;
+import static org.xiaowu.behappy.common.core.constant.ServiceConstants.PRODUCT_SERVICE;
 
 /**
  * @author xiaowu
@@ -76,5 +73,7 @@ public interface ProductFeignService {
     @GetMapping(value = "/spuinfo/skuId/{skuId}")
     R getSpuInfoBySkuId(@PathVariable("skuId") Long skuId);
 
+    @RequestMapping("/skuinfo/info/{skuId}")
+    R getSkuInfo(@PathVariable("skuId") Long skuId);
 
 }

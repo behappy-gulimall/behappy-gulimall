@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.xiaowu.behappy.common.core.constants;
+package org.xiaowu.behappy.common.core.constant;
 
 
 /**

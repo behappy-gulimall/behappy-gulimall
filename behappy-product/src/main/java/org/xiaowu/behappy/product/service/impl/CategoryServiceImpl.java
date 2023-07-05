@@ -12,6 +12,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.xiaowu.behappy.api.product.vo.Catelog2Vo;
+import org.xiaowu.behappy.common.core.exception.GulimallException;
 import org.xiaowu.behappy.common.mybatis.utils.PageUtils;
 import org.xiaowu.behappy.common.mybatis.utils.Query;
 import org.xiaowu.behappy.product.dao.CategoryDao;
@@ -25,6 +26,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import static org.xiaowu.behappy.common.core.enums.BizCodeEnum.MENU_HASH_PROP_EXCEPTION;
 
 
 @Service("categoryService")
@@ -55,7 +58,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
             //逻辑删除
             baseMapper.deleteBatchIds(asList);
         } else {
-            throw new RuntimeException("该菜单下面还有属性，无法删除!");
+            throw new GulimallException(MENU_HASH_PROP_EXCEPTION);
         }
     }
 

@@ -40,6 +40,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static org.xiaowu.behappy.common.core.enums.BizCodeEnum.READ_TIME_OUT_EXCEPTION;
+
 
 @Slf4j
 @Service("wareSkuService")
@@ -245,7 +247,7 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
             } else {
                 //消息拒绝以后重新放在队列里面，让别人继续消费解锁
                 //远程调用服务失败
-                throw new RuntimeException("远程调用服务失败");
+                throw new GulimallException(READ_TIME_OUT_EXCEPTION);
             }
         } else {
             //无需解锁

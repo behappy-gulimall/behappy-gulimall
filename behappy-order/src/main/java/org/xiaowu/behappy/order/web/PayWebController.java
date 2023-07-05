@@ -5,22 +5,22 @@ import com.lly835.bestpay.config.WxPayConfig;
 import com.lly835.bestpay.model.PayRequest;
 import com.lly835.bestpay.model.PayResponse;
 import com.lly835.bestpay.service.BestPayService;
-import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.xiaowu.behappy.api.order.vo.PayVo;
-import org.xiaowu.behappy.common.pay.config.AlipayTemplate;
+import org.xiaowu.behappy.common.core.exception.GulimallException;
+import org.xiaowu.behappy.common.pay.config.AlipayProperties;
 import org.xiaowu.behappy.order.entity.OrderEntity;
 import org.xiaowu.behappy.order.service.AliPayService;
 import org.xiaowu.behappy.order.service.OrderService;
 
 import static com.lly835.bestpay.enums.BestPayTypeEnum.WXPAY_NATIVE;
+import static org.xiaowu.behappy.common.core.enums.BizCodeEnum.ORDER_INVALID_EXCEPTION;
 
 /**
  * @author xiaowu
@@ -30,7 +30,7 @@ import static com.lly835.bestpay.enums.BestPayTypeEnum.WXPAY_NATIVE;
 @RequiredArgsConstructor
 public class PayWebController {
 
-    private final AlipayTemplate alipayTemplate;
+    private final AlipayProperties alipayProperties;
 
     private final OrderService orderService;
 
@@ -68,7 +68,7 @@ public class PayWebController {
         OrderEntity orderInfo = orderService.getOrderByOrderSn(orderSn);
 
         if (orderInfo == null) {
-            throw new RuntimeException("订单不存在");
+            throw new GulimallException(ORDER_INVALID_EXCEPTION);
         }
 
         PayRequest request = new PayRequest();

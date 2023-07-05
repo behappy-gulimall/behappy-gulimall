@@ -13,6 +13,9 @@ import org.xiaowu.behappy.coupon.service.CouponHistoryService;
 import java.util.Map;
 
 
+/**
+ * @author 94391
+ */
 @Service("couponHistoryService")
 public class CouponHistoryServiceImpl extends ServiceImpl<CouponHistoryDao, CouponHistoryEntity> implements CouponHistoryService {
 

@@ -1,6 +1,7 @@
 package org.xiaowu.behappy.api.coupon.feign;
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.xiaowu.behappy.api.common.to.SkuReductionTo;
@@ -8,7 +9,7 @@ import org.xiaowu.behappy.api.common.to.SpuBoundTo;
 import org.xiaowu.behappy.api.coupon.feign.factory.CouponFeignFactory;
 import org.xiaowu.behappy.common.core.result.R;
 
-import static org.xiaowu.behappy.common.core.constants.ServiceConstants.COUPON_SERVICE;
+import static org.xiaowu.behappy.common.core.constant.ServiceConstants.COUPON_SERVICE;
 
 /**
  * @author xiaowu
@@ -35,4 +36,10 @@ public interface CouponFeignService {
     @PostMapping("/skufullreduction/saveinfo")
     R saveSkuReduction(@RequestBody SkuReductionTo skuReductionTo);
 
+    /**
+     * 查询最近三天需要参加秒杀商品的信息
+     * @return
+     */
+    @GetMapping(value = "/seckillsession/latest3DaySession")
+    R getLates3DaySession();
 }

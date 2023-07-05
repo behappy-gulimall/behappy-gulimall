@@ -10,10 +10,10 @@
     <artifactId>behappy-common-pay</artifactId>
     <description>支付模块</description>
     <dependencies>
-        <!--第三方支付-->
+        <!-- wx支付 -->
         <dependency>
-            <groupId>cn.springboot</groupId>
-            <artifactId>best-pay-sdk</artifactId>
+            <groupId>com.github.wxpay</groupId>
+            <artifactId>wxpay-sdk</artifactId>
         </dependency>
         <!-- ali支付 -->
         <dependency>
