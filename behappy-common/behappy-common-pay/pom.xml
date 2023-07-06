@@ -10,6 +10,11 @@
     <artifactId>behappy-common-pay</artifactId>
     <description>支付模块</description>
     <dependencies>
+        <dependency>
+            <groupId>org.xiaowu</groupId>
+            <artifactId>behappy-common-core</artifactId>
+        </dependency>
+
         <!-- wx支付 -->
         <dependency>
             <groupId>com.github.wxpay</groupId>

@@ -36,6 +36,7 @@ public enum BizCodeEnum {
     MENU_HASH_PROP_EXCEPTION(11002,"该菜单下面还有属性，无法删除"),
     RES_ISNULL_FROM_ORDER_EXCEPTION(11003,"通过订单编号查询出来的结果为空"),
     ORDER_INVALID_EXCEPTION(11004,"订单无效"),
+    WX_PAY_EXCEPTION(12000,"微信支付失败"),
     EMPTY_CART_EXCEPTION(13001,"购物车列表为空"),
     USER_EXIST_EXCEPTION(15001,"存在相同的用户"),
     PHONE_EXIST_EXCEPTION(15002,"存在相同的手机号"),

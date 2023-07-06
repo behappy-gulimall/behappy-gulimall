@@ -46,4 +46,10 @@ public class MemberFeignImpl implements MemberFeignService {
         log.error("MemberFeignImpl - getAddress: {}", memberId);
         return R.error(cause);
     }
+
+    @Override
+    public R weixinLogin(String accessTokenInfo) {
+        log.error("MemberFeignImpl - weixinLogin: {}", accessTokenInfo);
+        return R.error(cause);
+    }
 }

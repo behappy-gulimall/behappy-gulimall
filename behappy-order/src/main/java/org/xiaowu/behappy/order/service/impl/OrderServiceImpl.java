@@ -6,9 +6,9 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.lly835.bestpay.model.PayResponse;
-import com.lly835.bestpay.service.BestPayService;
+import com.github.wxpay.sdk.WXPayUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.BeanUtils;
@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
-import org.xiaowu.behappy.api.cart.constant.CartConstant;
 import org.xiaowu.behappy.api.cart.feign.feign.CartFeignService;
 import org.xiaowu.behappy.api.common.vo.MemberAddressVo;
 import org.xiaowu.behappy.api.common.vo.MemberResponseVo;
@@ -78,8 +77,6 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
 
     private final PaymentInfoService paymentInfoService;
 
-    private final BestPayService bestPayService;
-
     private final RedisTemplate<String, Object> redisTemplate;
 
     private final WareFeignService wmsFeignService;
@@ -113,8 +110,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
      */
     @Override
     public OrderEntity getOrderByOrderSn(String orderSn) {
-        OrderEntity orderEntity = this.baseMapper.selectOne(new QueryWrapper<OrderEntity>().eq("order_sn", orderSn));
-        return orderEntity;
+        return this.baseMapper.selectOne(new QueryWrapper<OrderEntity>().eq("order_sn", orderSn));
     }
 
     /**
@@ -229,15 +225,18 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
      * @param notifyData
      * @return
      */
+    @SneakyThrows
     @Override
     public String asyncNotify(String notifyData) {
 
         //签名效验
-        PayResponse payResponse = bestPayService.asyncNotify(notifyData);
+        Map<String, String> payResponse = WXPayUtil.xmlToMap(notifyData);
         log.info("payResponse: {}", payResponse);
 
         //2.金额效验（从数据库查订单）
-        OrderEntity orderEntity = this.getOrderByOrderSn(payResponse.getOrderId());
+        // out_trade_no：系统内部订单号
+        String orderNo = payResponse.get("out_trade_no");
+        OrderEntity orderEntity = this.getOrderByOrderSn(orderNo);
 
         //如果查询出来的数据是null的话
         //比较严重(正常情况下是不会发生的)发出告警：钉钉、短信
@@ -249,14 +248,14 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         //判断订单状态状态是否为已支付或者是已取消
         Integer status = orderEntity.getStatus();
         if (status.equals(OrderStatusEnum.PAYED.getCode()) || status.equals(OrderStatusEnum.CANCLED.getCode())) {
-            throw new GulimallException(ORDER_INVALID_EXCEPTION.getCode(), "该订单已失效,orderNo=" + payResponse.getOrderId());
+            throw new GulimallException(ORDER_INVALID_EXCEPTION.getCode(), "该订单已失效,orderNo=" + orderNo);
         }
 
-        /*//判断金额是否一致,Double类型比较大小，精度问题不好控制
-        if (orderEntity.getPayAmount().compareTo(BigDecimal.valueOf(payResponse.getOrderAmount())) != 0) {
-            //TODO 告警
-            throw new RuntimeException("异步通知中的金额和数据库里的不一致,orderNo=" + payResponse.getOrderId());
-        }*/
+        //判断金额是否一致,Double类型比较大小，精度问题不好控制
+//        if (orderEntity.getPayAmount().compareTo(BigDecimal.valueOf(payResponse.getOrderAmount())) != 0) {
+//            //TODO 告警
+//            throw new RuntimeException("异步通知中的金额和数据库里的不一致,orderNo=" + payResponse.getOrderId());
+//        }
 
         //3.修改订单支付状态
         //支付成功状态
@@ -264,10 +263,11 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         this.updateOrderStatus(orderSn, OrderStatusEnum.PAYED.getCode(), PayConstant.WXPAY);
 
         //4.告诉微信不要再重复通知了
-        return "<xml>\n" +
-                "  <return_code><![CDATA[SUCCESS]]></return_code>\n" +
-                "  <return_msg><![CDATA[OK]]></return_msg>\n" +
-                "</xml>";
+        return """
+                <xml>
+                  <return_code><![CDATA[SUCCESS]]></return_code>
+                  <return_msg><![CDATA[OK]]></return_msg>
+                </xml>""";
     }
 
 

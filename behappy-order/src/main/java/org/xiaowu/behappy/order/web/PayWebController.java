@@ -1,10 +1,8 @@
 package org.xiaowu.behappy.order.web;
 
 import com.alipay.api.AlipayApiException;
-import com.lly835.bestpay.config.WxPayConfig;
-import com.lly835.bestpay.model.PayRequest;
-import com.lly835.bestpay.model.PayResponse;
-import com.lly835.bestpay.service.BestPayService;
+import com.github.wxpay.sdk.WXPayUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -14,12 +12,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.xiaowu.behappy.api.order.vo.PayVo;
 import org.xiaowu.behappy.common.core.exception.GulimallException;
-import org.xiaowu.behappy.common.pay.config.AlipayProperties;
+import org.xiaowu.behappy.common.core.utils.IpUtil;
+import org.xiaowu.behappy.common.pay.client.WxHttpClient;
+import org.xiaowu.behappy.common.pay.config.WxPayProperties;
 import org.xiaowu.behappy.order.entity.OrderEntity;
 import org.xiaowu.behappy.order.service.AliPayService;
 import org.xiaowu.behappy.order.service.OrderService;
 
-import static com.lly835.bestpay.enums.BestPayTypeEnum.WXPAY_NATIVE;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.xiaowu.behappy.common.core.enums.BizCodeEnum.ORDER_INVALID_EXCEPTION;
 
 /**
@@ -30,15 +34,15 @@ import static org.xiaowu.behappy.common.core.enums.BizCodeEnum.ORDER_INVALID_EXC
 @RequiredArgsConstructor
 public class PayWebController {
 
-    private final AlipayProperties alipayProperties;
-
     private final OrderService orderService;
 
-    private final BestPayService bestPayService;
-
-    private final WxPayConfig wxPayConfig;
-
     private final AliPayService aliPayService;
+
+    private final WxPayProperties wxPayProperties;
+
+    private final HttpServletRequest httpServletRequest;
+
+    private final WxHttpClient wxHttpClient;
 
     /**
      * 用户下单:支付宝支付
@@ -63,38 +67,52 @@ public class PayWebController {
      * @return
      */
     @GetMapping(value = "/weixinPayOrder")
-    public String weixinPayOrder(@RequestParam("orderSn") String orderSn, Model model) {
+    public String weixinPayOrder(@RequestParam("orderSn") String orderSn, Model model) throws Exception {
 
-        OrderEntity orderInfo = orderService.getOrderByOrderSn(orderSn);
+        OrderEntity order = orderService.getOrderByOrderSn(orderSn);
 
-        if (orderInfo == null) {
+        if (order == null) {
             throw new GulimallException(ORDER_INVALID_EXCEPTION);
         }
+        //1、设置参数
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("appid", wxPayProperties.getAppId());
+        paramMap.put("mch_id", wxPayProperties.getMchId());
+        paramMap.put("nonce_str", WXPayUtil.generateNonceStr());
+        paramMap.put("body", order.getNote());
+        paramMap.put("out_trade_no", order.getOrderSn());
+        // 单位是分
+        // paramMap.put("total_fee", "1");
+        // 将金额乘以 100，并将结果转换为 BigInteger
+        BigInteger cents = order.getPayAmount().multiply(new BigDecimal("100")).toBigInteger();
+        paramMap.put("total_fee", cents.toString());
 
-        PayRequest request = new PayRequest();
-        request.setOrderName("4559066-最好的支付sdk");
-        request.setOrderId(orderInfo.getOrderSn());
-        request.setOrderAmount(0.01);
-        request.setPayTypeEnum(WXPAY_NATIVE);
-
-        PayResponse payResponse = bestPayService.pay(request);
-        payResponse.setOrderId(orderInfo.getOrderSn());
-        log.info("发起支付 response={}", payResponse);
-
-        //传入前台的二维码路径生成支付二维码
-        model.addAttribute("codeUrl",payResponse.getCodeUrl());
-        model.addAttribute("orderId",payResponse.getOrderId());
-        model.addAttribute("returnUrl",wxPayConfig.getReturnUrl());
+        paramMap.put("spbill_create_ip", IpUtil.getIpAddr(httpServletRequest));
+        paramMap.put("notify_url", wxPayProperties.getNotifyUrl());
+        paramMap.put("trade_type", "NATIVE");
+        //2、微信统一支付 接口
+        String url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
+        //3、返回第三方的数据
+        String xml = wxHttpClient.execute(url, paramMap);
+        Map<String, String> resultMap = WXPayUtil.xmlToMap(xml);
+        log.debug("微信支付码返回信息: {}", resultMap.get("return_msg"));
+        //4、封装返回结果集. 传入前台的二维码路径生成支付二维码
+        model.addAttribute("codeUrl",resultMap.get("code_url"));
+        model.addAttribute("orderId",order.getOrderSn());
+        model.addAttribute("returnUrl",wxPayProperties.getReturnUrl());
 
         return "createForWxNative";
     }
 
-
-    //根据订单号查询订单状态的API
+    /**
+     * 根据订单号查询订单状态的API
+     * @param orderId
+     * @return
+     */
     @GetMapping(value = "/queryByOrderId")
     @ResponseBody
     public OrderEntity queryByOrderId(@RequestParam("orderId") String orderId) {
-        log.info("查询支付记录...");
+        log.debug("查询支付记录...");
         return orderService.getOrderByOrderSn(orderId);
     }
 
