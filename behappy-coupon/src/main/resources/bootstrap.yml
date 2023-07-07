@@ -1,5 +1,5 @@
 server:
-  port: 40000
+  port: 30002
 spring:
   profiles:
     active: @profiles.active@

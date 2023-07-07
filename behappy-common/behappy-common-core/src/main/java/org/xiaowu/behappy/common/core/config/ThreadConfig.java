@@ -41,7 +41,7 @@ public class ThreadConfig implements AsyncConfigurer {
         };
     }
 
-    @Bean
+    @Bean(destroyMethod = "shutdown")
     public ThreadPoolTaskExecutor executor(){
         return getThreadPoolTaskExecutor();
     }
