@@ -32,8 +32,8 @@ public class ESClientSpringFactory {
     /*-----------------------默认配置---------------------*/
 
     /*-----------------------auth---------------------*/
-    public static String USER_NAME = "elastic";
-    public static String PASS_WORD = "";
+    public static String USER_NAME ;
+    public static String PASS_WORD;
     /*-----------------------auth---------------------*/
 
     /**
@@ -46,12 +46,12 @@ public class ESClientSpringFactory {
     /**
      * 一次最多接收MaxTotal次请求
      */
-    public static int MAX_CONN_TOTAL = 200;
+    public static int MAX_CONN_TOTAL;
 
     /**
      * 一个服务每次能并行接收的请求数量
      */
-    public static int MAX_CONN_PER_ROUTE = 100;
+    public static int MAX_CONN_PER_ROUTE;
 
     private static HttpHost HTTP_HOST;
     private RestClientBuilder builder;
@@ -64,7 +64,10 @@ public class ESClientSpringFactory {
     }
 
     public static ESClientSpringFactory build(HttpHost httpHost,
-                                              Integer maxConnectNum, Integer maxConnectPerRoute,String username, String password) {
+                                              int maxConnectNum,
+                                              int maxConnectPerRoute,
+                                              String username,
+                                              String password) {
         HTTP_HOST = httpHost;
         MAX_CONN_TOTAL = maxConnectNum;
         MAX_CONN_PER_ROUTE = maxConnectPerRoute;

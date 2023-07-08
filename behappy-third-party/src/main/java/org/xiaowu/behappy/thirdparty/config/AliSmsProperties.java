@@ -14,9 +14,9 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "aliyun.sms")
 public class AliSmsProperties {
 
-    private String accessKeyId = "LTAI4G2h6DW4DCwJN4TWJNbH";
+    private String accessKeyId;
 
-    private String accessKeySecret = "OJD6uoCm5Rfn0ZLw9zcBbhzSi6e7jF";
+    private String accessKeySecret;
 
     private String signName = "ABC商城";
 

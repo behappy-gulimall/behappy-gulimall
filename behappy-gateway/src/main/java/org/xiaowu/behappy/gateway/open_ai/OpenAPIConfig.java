@@ -16,7 +16,7 @@ import java.util.Set;
 import static org.xiaowu.behappy.common.core.open_api.OpenAPIConfig.API_URI;
 
 /**
- * http://localhost:8088/swagger-ui.html
+ * http://localhost:88/swagger-ui.html
  * @author xiaowu
  */
 @ConditionalOnExpression("#{'dev'.equals('${spring.profiles.active:}')}")

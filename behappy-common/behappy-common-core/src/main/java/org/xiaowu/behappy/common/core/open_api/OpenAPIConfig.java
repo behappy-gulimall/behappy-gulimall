@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 
 /**
- * http://localhost:8088/swagger-ui.html
+ * http://localhost:88/swagger-ui.html
  * @author xiaowu
  */
 @Data

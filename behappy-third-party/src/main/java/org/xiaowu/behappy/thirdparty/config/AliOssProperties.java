@@ -16,9 +16,9 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "aliyun.oss")
 public class AliOssProperties {
 
-    private String endpoint;
+    private String endpoint = "oss-cn-beijing.aliyuncs.com";
 
-    private String bucket;
+    private String bucket = "behappy-xiaowu";
 
     private String accessKeyId;
 

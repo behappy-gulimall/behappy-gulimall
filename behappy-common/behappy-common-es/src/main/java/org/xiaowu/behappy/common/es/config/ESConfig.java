@@ -1,5 +1,6 @@
 package org.xiaowu.behappy.common.es.config;
 
+import cn.hutool.core.util.StrUtil;
 import lombok.Data;
 import org.apache.http.HttpHost;
 import org.elasticsearch.client.HttpAsyncResponseConsumerFactory;
@@ -23,37 +24,37 @@ public class ESConfig {
     /**
      * 127.0.0.1
      */
-    private String host;
+    private String host = "127.0.0.1";
 
     /**
      * http/https
      */
-    private String scheme;
+    private String scheme = "http";
 
     /**
      * 9200
      */
-    private int port;
+    private int port = 9200;
 
     /**
      * userName
      */
-    private String username;
+    private String username = StrUtil.EMPTY;
 
     /**
      * passWord
      */
-    private String password;
+    private String password = StrUtil.EMPTY;
 
     /**
-     * 30
+     * 一次最多接收MaxTotal次请求 default:200
      */
-    private Integer connectNum;
+    private int connectNum = 200;
 
     /**
-     * 10
+     * 一个服务每次能并行接收的请求数量 default:100
      */
-    private Integer connectPerRoute;
+    private int connectPerRoute = 100;
 
     public HttpHost httpHost() {
         return new HttpHost(host, port, scheme);
