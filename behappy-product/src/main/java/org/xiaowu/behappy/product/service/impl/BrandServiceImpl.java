@@ -19,8 +19,8 @@ import java.util.Map;
 
 /**
  * (onConstructor_ = {@Lazy})：fix circle dependency
- * For JDK7 is onConstructor_ ={@Lazy}
  * For JDK7 is onConstructor = @__(@Lazy)
+ * For JDK8+ is onConstructor_ ={@Lazy}
  */
 @Service("brandService")
 @RequiredArgsConstructor(onConstructor_ = {@Lazy})
