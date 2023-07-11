@@ -38,7 +38,7 @@ public class GulimallException extends RuntimeException {
 
     @Override
     public String toString() {
-        return "HospitalException{" +
+        return "GulimallException{" +
                 "code=" + code +
                 ", message=" + this.getMessage() +
                 '}';

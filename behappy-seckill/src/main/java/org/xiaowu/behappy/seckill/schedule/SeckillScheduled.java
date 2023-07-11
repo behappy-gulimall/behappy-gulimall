@@ -18,7 +18,7 @@ import static org.xiaowu.behappy.api.seckill.constant.SeckillConstant.UPLOAD_LOC
  *  当天00:00:00 - 23:59:59
  *  明天00:00:00 - 23:59:59
  *  后天00:00:00 - 23:59:59
- * @author 94391
+ * @author xiaowu
  */
 
 @Slf4j

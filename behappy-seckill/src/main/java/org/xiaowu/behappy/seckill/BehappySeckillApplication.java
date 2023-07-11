@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
- * @author 94391
+ * @author xiaowu
  */
 @EnableFeignClients(basePackages = "org.xiaowu.behappy")
 @SpringBootApplication(scanBasePackages = "org.xiaowu.behappy")

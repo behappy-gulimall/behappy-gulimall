@@ -4,7 +4,7 @@ import lombok.Data;
 
 /**
  * spu信息介绍
- * @author 94391
+ * @author xiaowu
  */
 @Data
 public class SpuInfoDescEntityVo {

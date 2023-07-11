@@ -11,7 +11,7 @@ import org.xiaowu.behappy.common.core.result.R;
 import org.xiaowu.behappy.thirdparty.service.SmsService;
 
 /**
- * @author 94391
+ * @author xiaowu
  */
 @RestController
 @RequestMapping(value = "/sms")

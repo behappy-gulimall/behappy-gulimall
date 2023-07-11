@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.xiaowu.behappy.api.order.feign.feign.factory.CartFeignFactory;
+import org.xiaowu.behappy.api.order.feign.feign.factory.OrderFeignFactory;
 import org.xiaowu.behappy.common.core.result.R;
 
 import java.util.Map;
@@ -17,7 +17,7 @@ import static org.xiaowu.behappy.common.core.constant.ServiceConstants.ORDER_SER
  */
 @FeignClient(value = ORDER_SERVICE,
         path = "/order",
-        fallbackFactory = CartFeignFactory.class)
+        fallbackFactory = OrderFeignFactory.class)
 public interface OrderFeignService {
 
     /**

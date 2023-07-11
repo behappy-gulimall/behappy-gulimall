@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * @author 94391
+ * @author xiaowu
  */
 @SpringBootApplication(scanBasePackages = "org.xiaowu.behappy")
 public class BehappyThirdPartyApplication {

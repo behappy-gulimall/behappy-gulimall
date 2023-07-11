@@ -5,7 +5,7 @@ import org.xiaowu.behappy.api.seckill.to.SeckillSkuRedisTo;
 import java.util.List;
 
 /**
- * @author 94391
+ * @author xiaowu
  */
 public interface SeckillService {
 

@@ -38,7 +38,7 @@ import java.util.stream.Collectors;
 import static org.xiaowu.behappy.api.seckill.constant.SeckillConstant.*;
 
 /**
- * @author 94391
+ * @author xiaowu
  */
 @Slf4j
 @Service

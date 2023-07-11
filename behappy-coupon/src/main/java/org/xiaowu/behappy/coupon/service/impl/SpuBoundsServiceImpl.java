@@ -15,7 +15,7 @@ import java.util.Map;
 
 
 /**
- * @author 94391
+ * @author xiaowu
  */
 @Service("spuBoundsService")
 public class SpuBoundsServiceImpl extends ServiceImpl<SpuBoundsDao, SpuBoundsEntity> implements SpuBoundsService {

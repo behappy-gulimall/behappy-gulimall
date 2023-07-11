@@ -6,7 +6,7 @@ import lombok.ToString;
 import java.util.List;
 
 /**
- * @author 94391
+ * @author xiaowu
  */
 @Data
 public class SkuItemSaleAttrVo {

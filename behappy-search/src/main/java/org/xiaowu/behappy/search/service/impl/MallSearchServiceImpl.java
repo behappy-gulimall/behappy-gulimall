@@ -20,10 +20,8 @@ import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.MultiBucketsAggregation;
+import org.elasticsearch.search.aggregations.bucket.nested.Nested;
 import org.elasticsearch.search.aggregations.bucket.nested.NestedAggregationBuilder;
-import org.elasticsearch.search.aggregations.bucket.nested.ParsedNested;
-import org.elasticsearch.search.aggregations.bucket.terms.ParsedLongTerms;
-import org.elasticsearch.search.aggregations.bucket.terms.ParsedStringTerms;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
@@ -112,8 +110,8 @@ public class MallSearchServiceImpl implements MallSearchService {
         //2、当前商品涉及到的所有属性信息
         List<SearchResult.AttrVo> attrVos = new ArrayList<>();
         //获取属性信息的聚合
-        ParsedNested attrsAgg = response.getAggregations().get("attr_agg");
-        ParsedLongTerms attrIdAgg = attrsAgg.getAggregations().get("attr_id_agg");
+        Nested attrsAgg = response.getAggregations().get("attr_agg");
+        Terms attrIdAgg = attrsAgg.getAggregations().get("attr_id_agg");
         for (Terms.Bucket bucket : attrIdAgg.getBuckets()) {
             SearchResult.AttrVo attrVo = new SearchResult.AttrVo();
             //1、得到属性的id
@@ -121,12 +119,12 @@ public class MallSearchServiceImpl implements MallSearchService {
             attrVo.setAttrId(attrId);
 
             //2、得到属性的名字
-            ParsedStringTerms attrNameAgg = bucket.getAggregations().get("attr_name_agg");
+            Terms attrNameAgg = bucket.getAggregations().get("attr_name_agg");
             String attrName = attrNameAgg.getBuckets().get(0).getKeyAsString();
             attrVo.setAttrName(attrName);
 
             //3、得到属性的所有值
-            ParsedStringTerms attrValueAgg = bucket.getAggregations().get("attr_value_agg");
+            Terms attrValueAgg = bucket.getAggregations().get("attr_value_agg");
             List<String> attrValues = attrValueAgg.getBuckets().stream().map(MultiBucketsAggregation.Bucket::getKeyAsString).collect(Collectors.toList());
             attrVo.setAttrValue(attrValues);
 
@@ -138,7 +136,7 @@ public class MallSearchServiceImpl implements MallSearchService {
         //3、当前商品涉及到的所有品牌信息
         List<SearchResult.BrandVo> brandVos = new ArrayList<>();
         //获取到品牌的聚合
-        ParsedLongTerms brandAgg = response.getAggregations().get("brand_agg");
+        Terms brandAgg = response.getAggregations().get("brand_agg");
         for (Terms.Bucket bucket : brandAgg.getBuckets()) {
             SearchResult.BrandVo brandVo = new SearchResult.BrandVo();
 
@@ -147,12 +145,12 @@ public class MallSearchServiceImpl implements MallSearchService {
             brandVo.setBrandId(brandId);
 
             //2、得到品牌的名字
-            ParsedStringTerms brandNameAgg = bucket.getAggregations().get("brand_name_agg");
+            Terms brandNameAgg = bucket.getAggregations().get("brand_name_agg");
             String brandName = brandNameAgg.getBuckets().get(0).getKeyAsString();
             brandVo.setBrandName(brandName);
 
             //3、得到品牌的图片
-            ParsedStringTerms brandImgAgg = bucket.getAggregations().get("brand_img_agg");
+            Terms brandImgAgg = bucket.getAggregations().get("brand_img_agg");
             String brandImg = brandImgAgg.getBuckets().get(0).getKeyAsString();
             brandVo.setBrandImg(brandImg);
 
@@ -163,7 +161,7 @@ public class MallSearchServiceImpl implements MallSearchService {
         //4、当前商品涉及到的所有分类信息
         //获取到分类的聚合
         List<SearchResult.CatalogVo> catalogVos = new ArrayList<>();
-        ParsedLongTerms catalogAgg = response.getAggregations().get("catalog_agg");
+        Terms catalogAgg = response.getAggregations().get("catalog_agg");
         for (Terms.Bucket bucket : catalogAgg.getBuckets()) {
             SearchResult.CatalogVo catalogVo = new SearchResult.CatalogVo();
             //得到分类id
@@ -171,7 +169,7 @@ public class MallSearchServiceImpl implements MallSearchService {
             catalogVo.setCatalogId(Long.parseLong(keyAsString));
 
             //得到分类名
-            ParsedStringTerms catalogNameAgg = bucket.getAggregations().get("catalog_name_agg");
+            Terms catalogNameAgg = bucket.getAggregations().get("catalog_name_agg");
             String catalogName = catalogNameAgg.getBuckets().get(0).getKeyAsString();
             catalogVo.setCatalogName(catalogName);
             catalogVos.add(catalogVo);

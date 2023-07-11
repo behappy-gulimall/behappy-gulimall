@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.xiaowu.behappy.api.common.vo.MemberResponseVo;
 import org.xiaowu.behappy.api.member.feign.MemberFeignService;
 import org.xiaowu.behappy.api.member.vo.SocialUser;
+import org.xiaowu.behappy.auth.config.WbConfigProperties;
 import org.xiaowu.behappy.common.core.exception.GulimallException;
 import org.xiaowu.behappy.common.core.result.R;
 import org.xiaowu.behappy.common.core.utils.HttpClientUtil;
@@ -33,14 +34,16 @@ public class OAuth2Controller {
 
     private final MemberFeignService memberFeignService;
 
+    private final WbConfigProperties wbConfigProperties;
+
     @GetMapping(value = "/oauth2.0/weibo/success")
     public String weibo(@RequestParam("code") String code, HttpSession session) throws Exception {
 
         Map<String, Object> map = new HashMap<>();
-        map.put("client_id", "2077705774");
-        map.put("client_secret", "40af02bd1c7e435ba6a6e9cd3bf799fd");
+        map.put("client_id", wbConfigProperties.getClientId());
+        map.put("client_secret", wbConfigProperties.getClientSecret());
         map.put("grant_type", "authorization_code");
-        map.put("redirect_uri", "http://auth.gulimall.com/oauth2.0/weibo/success");
+        map.put("redirect_uri", wbConfigProperties.getRedirectUri());
         map.put("code", code);
 
         try {

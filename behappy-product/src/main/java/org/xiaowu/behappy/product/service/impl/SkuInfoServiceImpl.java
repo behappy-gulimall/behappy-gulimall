@@ -30,7 +30,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 
 /**
- * @author 94391
+ * @author xiaowu
  */
 @Service("skuInfoService")
 @RequiredArgsConstructor

@@ -12,7 +12,7 @@ import org.xiaowu.behappy.product.service.SkuInfoService;
 import java.util.concurrent.ExecutionException;
 
 /**
- * @author 94391
+ * @author xiaowu
  */
 @Controller
 @RequiredArgsConstructor

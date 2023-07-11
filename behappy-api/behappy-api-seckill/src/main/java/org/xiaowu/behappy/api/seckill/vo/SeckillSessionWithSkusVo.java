@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @author 94391
+ * @author xiaowu
  */
 @Data
 public class SeckillSessionWithSkusVo {

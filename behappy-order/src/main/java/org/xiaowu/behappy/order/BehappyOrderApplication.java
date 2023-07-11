@@ -7,7 +7,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 /**
- * @author 94391
+ * @author xiaowu
  * @EnableAspectJAutoProxy(exposeProxy = true)：开启aspect动态代理模式, 对外暴露代理对象
  */
 @EnableAspectJAutoProxy(exposeProxy = true)

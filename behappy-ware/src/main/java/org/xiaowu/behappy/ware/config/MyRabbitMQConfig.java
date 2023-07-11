@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import java.util.HashMap;
 
 /**
- * @author 94391
+ * @author xiaowu
  */
 @Configuration
 public class MyRabbitMQConfig {

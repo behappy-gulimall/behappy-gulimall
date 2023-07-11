@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.xiaowu.behappy.seckill.service.SeckillService;
 
 /**
- * @author 94391
+ * @author xiaowu
  */
 @Slf4j
 @Controller

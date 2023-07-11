@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * 二级分类id
  *
- * @author 94391
+ * @author xiaowu
  **/
 @Data
 @AllArgsConstructor

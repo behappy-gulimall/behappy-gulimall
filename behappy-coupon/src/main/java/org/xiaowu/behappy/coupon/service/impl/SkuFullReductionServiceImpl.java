@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 
 
 /**
- * @author 94391
+ * @author xiaowu
  */
 @Service("skuFullReductionService")
 @RequiredArgsConstructor

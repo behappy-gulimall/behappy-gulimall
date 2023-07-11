@@ -9,12 +9,12 @@ import org.springframework.context.annotation.Configuration;
  */
 @Data
 @Configuration
-@ConfigurationProperties(prefix = "wx.open")
-public class WxConfigProperties {
+@ConfigurationProperties(prefix = "wb.open")
+public class WbConfigProperties {
 
-    private String appId;
+    private String clientId;
 
-    private String appSecret;
+    private String clientSecret;
 
-    private String redirectUrl;
+    private String redirectUri = "http://auth.gulimall.com/oauth2.0/weibo/success";
 }

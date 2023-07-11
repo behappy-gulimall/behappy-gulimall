@@ -62,6 +62,8 @@
         <aspectjweaver.version>1.9.19</aspectjweaver.version>
         <!--https://mvnrepository.com/artifact/commons-codec/commons-codec -->
         <commons-codec.version>1.15</commons-codec.version>
+        <!--https://mvnrepository.com/artifact/commons-io/commons-io -->
+        <commons.io.version>2.13.0</commons.io.version>
         <!--https://mvnrepository.com/artifact/com.xuxueli/xxl-job-core -->
         <xxl-job.version>2.3.1</xxl-job.version>
         <!--https://mvnrepository.com/artifact/org.elasticsearch.client/elasticsearch-rest-high-level-client -->
@@ -151,6 +153,11 @@
                 <groupId>com.xuxueli</groupId>
                 <artifactId>xxl-job-core</artifactId>
                 <version>${xxl-job.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons.io.version}</version>
             </dependency>
             <!-- commons-codec -->
             <dependency>
@@ -370,12 +377,6 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <scope>runtime</scope>
         </dependency>
         <!--指标-->
         <dependency>

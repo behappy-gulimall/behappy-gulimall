@@ -5,7 +5,7 @@ import lombok.Data;
 import java.math.BigDecimal;
 
 /**
- * @author 94391
+ * @author xiaowu
  */
 @Data
 public class SkuInfoEntityVo {

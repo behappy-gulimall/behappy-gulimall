@@ -1,8 +1,6 @@
 package org.xiaowu.behappy.common.core.utils;
 
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
@@ -109,7 +107,6 @@ public class HttpClientUtil {
         CloseableHttpResponse response = null;
         try {
             URIBuilder uriBuilder = new URIBuilder(uri);
-            HttpGet httpGet = new HttpGet(uriBuilder.build());
             // params
             if (null != urlParams && !urlParams.isEmpty()) {
                 List<NameValuePair> params = new ArrayList<>();
@@ -118,6 +115,7 @@ public class HttpClientUtil {
                 }
                 uriBuilder.setParameters(params);
             }
+            HttpGet httpGet = new HttpGet(uriBuilder.build());
             // headers
             if (null != headers && !headers.isEmpty()) {
                 for (Map.Entry<String, Object> header : headers.entrySet()) {
@@ -161,7 +159,6 @@ public class HttpClientUtil {
         CloseableHttpResponse response = null;
         try {
             URIBuilder uriBuilder = new URIBuilder(uri);
-            HttpPost httpPost = new HttpPost(uriBuilder.build());
             // urlParams
             if (null != urlParams && !urlParams.isEmpty()) {
                 List<NameValuePair> params = new ArrayList<>();
@@ -170,6 +167,7 @@ public class HttpClientUtil {
                 }
                 uriBuilder.setParameters(params);
             }
+            HttpPost httpPost = new HttpPost(uriBuilder.build());
             // postParams
             if (null != postParams && !postParams.isEmpty()) {
                 List<NameValuePair> params = new ArrayList<>();

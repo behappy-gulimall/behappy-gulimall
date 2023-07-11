@@ -9,7 +9,7 @@ import org.xiaowu.behappy.api.order.feign.feign.impl.OrderFeignImpl;
  * @author xiaowu
  */
 @Component
-public class CartFeignFactory implements FallbackFactory<OrderFeignService> {
+public class OrderFeignFactory implements FallbackFactory<OrderFeignService> {
 
     @Override
     public OrderFeignService create(Throwable cause) {

@@ -6,7 +6,7 @@ import org.xiaowu.behappy.api.common.vo.SkuInfoVo;
 import java.math.BigDecimal;
 
 /**
- * @author 94391
+ * @author xiaowu
  * @Description: 给Redis中存放的skuInfo的信息
  **/
 

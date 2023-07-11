@@ -14,7 +14,7 @@ import java.util.Map;
 
 
 /**
- * @author 94391
+ * @author xiaowu
  */
 @Service("couponHistoryService")
 public class CouponHistoryServiceImpl extends ServiceImpl<CouponHistoryDao, CouponHistoryEntity> implements CouponHistoryService {

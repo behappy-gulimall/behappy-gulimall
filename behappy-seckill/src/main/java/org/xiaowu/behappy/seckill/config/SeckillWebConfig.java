@@ -6,7 +6,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.xiaowu.behappy.seckill.interceptor.LoginUserInterceptor;
 
 /**
- * @author 94391
+ * @author xiaowu
  */
 @Configuration
 public class SeckillWebConfig implements WebMvcConfigurer {

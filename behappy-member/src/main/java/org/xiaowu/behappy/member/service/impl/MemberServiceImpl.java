@@ -31,6 +31,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+/**
+ * @author xiaowu
+ */
 @Service("memberService")
 @RequiredArgsConstructor
 public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> implements MemberService {
@@ -174,14 +177,14 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> impl
             //昵称
             String nickName = (String) userInfoMap.get("nickname");
             //性别
-            Double sex = (Double) userInfoMap.get("sex");
+            Integer sex = (Integer) userInfoMap.get("sex");
             //微信头像
             String headimgurl = (String) userInfoMap.get("headimgurl");
 
             //把扫码人的信息添加到数据库中
             memberEntity = new MemberEntity();
             memberEntity.setNickname(nickName);
-            memberEntity.setGender(sex.intValue());
+            memberEntity.setGender(sex);
             memberEntity.setHeader(headimgurl);
             memberEntity.setCreateTime(new Date());
             memberEntity.setSocialUid(openid);

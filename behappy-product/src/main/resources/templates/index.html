@@ -589,7 +589,7 @@
   }
 
   $.get("http://seckill.gulimall.com/getCurrentSeckillSkus", function (res) {
-    if (res.data.length > 0) {
+    if (res.data && res.data.length > 0) {
       res.data.forEach(function (item) {
         $("<li onclick='toDetail(" + item.skuId + ")'></li>").append($("<img style='width: 130px; height: 130px' src='" + item.skuInfo.skuDefaultImg + "' />"))
                 .append($("<p>"+item.skuInfo.skuTitle+"</p>"))

@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.view.RedirectView;
 import org.xiaowu.behappy.api.common.vo.MemberResponseVo;
 import org.xiaowu.behappy.api.member.feign.MemberFeignService;
 import org.xiaowu.behappy.auth.config.WxConfigProperties;
@@ -38,11 +39,24 @@ public class WxApiController {
     private final WxConfigProperties wxConfigProperties;
 
     /**
+     * 微信回调后，我们再重定向到auth.gulimall.com下，保证session共享在同一个顶级域名下
+     * 否则微信登录后，其他域名无法获取到统一session
+     * @param code
+     * @param state
+     * @return
+     */
+    @GetMapping("/callback")
+    public RedirectView redirect(String code, String state) {
+        String url = "http://auth.gulimall.com/api/ucenter/wx/recallback?code=%s&state=%s".formatted(code, state);
+        return new RedirectView(url, true);
+    }
+
+    /**
      * 获取扫码人的信息，添加数据
      *
      * @return
      */
-    @GetMapping(value = "/callback")
+    @GetMapping(value = "/recallback")
     public String callback(String code, String state, HttpSession session) throws Exception {
 
         // 1、获取授权票据
@@ -96,7 +110,7 @@ public class WxApiController {
     }
 
     /**
-     * 生成微信扫描二维码
+     * 用户点击微信登录后，会走这里 -> 生成微信扫描二维码
      * @return
      * @throws UnsupportedEncodingException
      */

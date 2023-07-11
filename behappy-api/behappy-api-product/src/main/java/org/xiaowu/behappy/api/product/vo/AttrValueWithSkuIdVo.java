@@ -3,7 +3,7 @@ package org.xiaowu.behappy.api.product.vo;
 import lombok.Data;
 
 /**
- * @author 94391
+ * @author xiaowu
  */
 @Data
 public class AttrValueWithSkuIdVo {

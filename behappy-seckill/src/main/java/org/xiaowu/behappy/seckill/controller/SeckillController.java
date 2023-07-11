@@ -14,7 +14,7 @@ import org.xiaowu.behappy.seckill.service.SeckillService;
 import java.util.List;
 
 /**
- * @author 94391
+ * @author xiaowu
  */
 @Slf4j
 @RestController
