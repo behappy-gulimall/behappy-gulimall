@@ -61,9 +61,8 @@ public class WareInfoServiceImpl extends ServiceImpl<WareInfoDao, WareInfoEntity
         R addrInfo = memberFeignService.info(addrId);
         MemberAddressVo memberAddressVo = addrInfo.getData("memberReceiveAddress",new TypeReference<MemberAddressVo>() {});
         if (memberAddressVo != null) {
-            String phone = memberAddressVo.getPhone();
-            //截取用户手机号码最后一位作为我们的运费计算
-            String fare = phone.substring(phone.length() - 10, phone.length()-8);
+            //运费取0元
+            String fare = "0";
             BigDecimal bigDecimal = new BigDecimal(fare);
 
             fareVo.setFare(bigDecimal);

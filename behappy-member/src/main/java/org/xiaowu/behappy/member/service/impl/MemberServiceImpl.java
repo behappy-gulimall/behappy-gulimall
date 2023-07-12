@@ -1,5 +1,6 @@
 package org.xiaowu.behappy.member.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
@@ -42,9 +43,14 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> impl
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
+        String key = (String) params.get("key");
+        QueryWrapper<MemberEntity> queryWrapper = new QueryWrapper<MemberEntity>();
+        if (StrUtil.isNotEmpty(key)){
+            queryWrapper.eq("id", key);
+        }
         IPage<MemberEntity> page = this.page(
                 new Query<MemberEntity>().getPage(params),
-                new QueryWrapper<MemberEntity>()
+                queryWrapper
         );
 
         return new PageUtils(page);

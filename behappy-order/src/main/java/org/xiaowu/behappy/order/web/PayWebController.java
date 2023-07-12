@@ -1,5 +1,6 @@
 package org.xiaowu.behappy.order.web;
 
+import cn.hutool.core.util.StrUtil;
 import com.alipay.api.AlipayApiException;
 import com.github.wxpay.sdk.WXPayUtil;
 import jakarta.servlet.http.HttpServletRequest;
@@ -79,7 +80,7 @@ public class PayWebController {
         paramMap.put("appid", wxPayProperties.getAppId());
         paramMap.put("mch_id", wxPayProperties.getMchId());
         paramMap.put("nonce_str", WXPayUtil.generateNonceStr());
-        paramMap.put("body", order.getNote());
+        paramMap.put("body", StrUtil.nullToDefault(order.getNote(), "收货人：%s\n订单号：%s".formatted(order.getReceiverName(), orderSn)));
         paramMap.put("out_trade_no", order.getOrderSn());
         // 单位是分
         // paramMap.put("total_fee", "1");

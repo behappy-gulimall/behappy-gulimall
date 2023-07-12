@@ -32,6 +32,7 @@ import org.xiaowu.behappy.api.order.to.OrderTo;
 import org.xiaowu.behappy.api.order.vo.*;
 import org.xiaowu.behappy.api.product.feign.ProductFeignService;
 import org.xiaowu.behappy.api.product.vo.SpuInfoVo;
+import org.xiaowu.behappy.api.seckill.to.SeckillOrderTo;
 import org.xiaowu.behappy.api.ware.feign.WareFeignService;
 import org.xiaowu.behappy.api.ware.vo.FareVo;
 import org.xiaowu.behappy.api.ware.vo.WareSkuLockVo;
@@ -145,13 +146,13 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     /**
      * 关闭订单
      *
-     * @param orderEntity
+     * @param orderVo
      */
     @Override
-    public void closeOrder(OrderEntity orderEntity) {
+    public void closeOrder(OrderVo orderVo) {
         //关闭订单之前先查询一下数据库，判断此订单状态是否已支付
         OrderEntity orderInfo = this.getOne(new QueryWrapper<OrderEntity>().
-                eq("order_sn", orderEntity.getOrderSn()));
+                eq("order_sn", orderVo.getOrderSn()));
 
         if (orderInfo.getStatus().equals(OrderStatusEnum.CREATE_NEW.getCode())) {
             //代付款状态进行关单
@@ -690,4 +691,43 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         return payVo;
     }
 
+
+    /**
+     * 创建秒杀单
+     * @param orderTo
+     */
+    @Override
+    public void createSeckillOrder(SeckillOrderTo orderTo) {
+
+        //TODO 保存订单信息
+        OrderEntity orderEntity = new OrderEntity();
+        orderEntity.setOrderSn(orderTo.getOrderSn());
+        orderEntity.setMemberId(orderTo.getMemberId());
+        orderEntity.setCreateTime(new Date());
+        BigDecimal totalPrice = orderTo.getSeckillPrice().multiply(BigDecimal.valueOf(orderTo.getNum()));
+        orderEntity.setPayAmount(totalPrice);
+        orderEntity.setStatus(OrderStatusEnum.CREATE_NEW.getCode());
+
+        //保存订单
+        this.save(orderEntity);
+
+        //保存订单项信息
+        OrderItemEntity orderItem = new OrderItemEntity();
+        orderItem.setOrderSn(orderTo.getOrderSn());
+        orderItem.setRealAmount(totalPrice);
+
+        orderItem.setSkuQuantity(orderTo.getNum());
+
+        //保存商品的spu信息
+        R spuInfo = productFeignService.getSpuInfoBySkuId(orderTo.getSkuId());
+        SpuInfoVo spuInfoData = spuInfo.getData("data", new TypeReference<SpuInfoVo>() {
+        });
+        orderItem.setSpuId(spuInfoData.getId());
+        orderItem.setSpuName(spuInfoData.getSpuName());
+        orderItem.setSpuBrand(spuInfoData.getBrandName());
+        orderItem.setCategoryId(spuInfoData.getCatalogId());
+
+        //保存订单项数据
+        orderItemService.save(orderItem);
+    }
 }

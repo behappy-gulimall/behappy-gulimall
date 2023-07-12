@@ -54,7 +54,7 @@ public class CartInterceptor implements HandlerInterceptor {
                 String name = cookie.getName();
                 if (name.equals(TEMP_USER_COOKIE_NAME)) {
                     userInfoTo.setUserKey(cookie.getValue());
-                    //标记为已是临时用户
+                    //标记为是临时用户
                     userInfoTo.setTempUser(true);
                 }
             }

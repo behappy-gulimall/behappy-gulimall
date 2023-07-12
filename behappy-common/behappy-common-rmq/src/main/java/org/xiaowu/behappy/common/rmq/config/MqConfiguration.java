@@ -2,6 +2,7 @@ package org.xiaowu.behappy.common.rmq.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.ReturnedMessage;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
@@ -25,15 +26,10 @@ import static cn.hutool.core.util.CharsetUtil.UTF_8;
 @EnableRabbit
 public class MqConfiguration {
 
-    private RabbitTemplate rabbitTemplate;
-
     @Primary
     @Bean
     public RabbitTemplate rabbitTemplate(@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection") ConnectionFactory connectionFactory) {
-        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
-        this.rabbitTemplate = rabbitTemplate;
-        initRabbitTemplate();
-        return rabbitTemplate;
+        return initRabbitTemplate(connectionFactory);
     }
 
     /**
@@ -66,7 +62,10 @@ public class MqConfiguration {
      *       simple:
      *         acknowledge-mode: manual
      */
-    public void initRabbitTemplate() {
+    public RabbitTemplate initRabbitTemplate(ConnectionFactory connectionFactory) {
+        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
+        // 开启mandatory为true才能触发回调方法，无论消息推送结果如何强制调用回调方法
+        rabbitTemplate.setMandatory(true);
         rabbitTemplate.setMessageConverter(messageConverter());
         rabbitTemplate.setEncoding(UTF_8);
         /**
@@ -81,6 +80,7 @@ public class MqConfiguration {
                 if (Objects.nonNull(correlationData)){
                     log.info("Mq Send Confirm CallBack, 回调id: {}", correlationData.getId());
                 }
+                // 只要消息抵达broker，ack则为true
                 if(ack) {
                     log.info("消息发送成功");
                 }else {
@@ -96,13 +96,17 @@ public class MqConfiguration {
          * exchange: 当时这个发送给那个交换机
          * routerKey: 当时这个消息用那个路由键
          */
-        rabbitTemplate.setReturnsCallback(returnedMessage -> {
-            Message message = returnedMessage.getMessage();
-            String exchange = returnedMessage.getExchange();
-            String replyText = returnedMessage.getReplyText();
-            int replyCode = returnedMessage.getReplyCode();
-            String routerKey = returnedMessage.getRoutingKey();
-            log.error("Fail Message [" + message + "]" + "\treplyCode: " + replyCode + "\treplyText:" + replyText + "\texchange:" + exchange + "\trouterKey:" + routerKey);
+        rabbitTemplate.setReturnsCallback(new RabbitTemplate.ReturnsCallback() {
+            @Override
+            public void returnedMessage(ReturnedMessage returnedMessage) {
+                Message message = returnedMessage.getMessage();
+                String exchange = returnedMessage.getExchange();
+                String replyText = returnedMessage.getReplyText();
+                int replyCode = returnedMessage.getReplyCode();
+                String routerKey = returnedMessage.getRoutingKey();
+                log.error("Fail Message [" + message + "]" + "\treplyCode: " + replyCode + "\treplyText:" + replyText + "\texchange:" + exchange + "\trouterKey:" + routerKey);
+            }
         });
+        return rabbitTemplate;
     }
 }

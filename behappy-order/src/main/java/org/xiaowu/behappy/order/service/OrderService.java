@@ -2,6 +2,7 @@ package org.xiaowu.behappy.order.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.xiaowu.behappy.api.order.vo.*;
+import org.xiaowu.behappy.api.seckill.to.SeckillOrderTo;
 import org.xiaowu.behappy.common.mybatis.utils.PageUtils;
 import org.xiaowu.behappy.order.entity.OrderEntity;
 
@@ -23,7 +24,7 @@ public interface OrderService extends IService<OrderEntity> {
 
     PageUtils queryPageWithItem(Map<String, Object> params);
 
-    void closeOrder(OrderEntity orderEntity);
+    void closeOrder(OrderVo orderEntity);
 
     String handlePayResult(PayAsyncVo asyncVo);
 
@@ -34,5 +35,7 @@ public interface OrderService extends IService<OrderEntity> {
     OrderConfirmVo confirmOrder() throws ExecutionException, InterruptedException;
 
     PayVo getOrderPay(String orderSn);
+
+    void createSeckillOrder(SeckillOrderTo orderTo);
 }
 
