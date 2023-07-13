@@ -2,6 +2,7 @@ package org.xiaowu.behappy.product.web;
 
 import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import java.util.concurrent.ExecutionException;
 /**
  * @author xiaowu
  */
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class ItemController {
@@ -28,7 +30,7 @@ public class ItemController {
     @GetMapping("/{skuId}.html")
     public String skuItem(@PathVariable("skuId") Long skuId, Model model) throws ExecutionException, InterruptedException {
 
-        System.out.println("准备查询" + skuId + "详情");
+        log.debug("准备查询" + skuId + "详情");
 
         SkuItemVo vos = skuInfoService.item(skuId);
 

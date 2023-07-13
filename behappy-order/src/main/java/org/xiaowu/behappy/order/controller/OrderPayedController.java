@@ -4,6 +4,7 @@ import com.alipay.api.AlipayApiException;
 import com.alipay.api.internal.util.AlipaySignature;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,7 +20,7 @@ import java.util.Map;
  * @author xiaowu
  * @Description: 订单支付成功监听器
  **/
-
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class OrderPayedController {
@@ -51,12 +52,12 @@ public class OrderPayedController {
                 alipayProperties.getCharset(), alipayProperties.getSignType()); //调用SDK验证签名
 
         if (signVerified) {
-            System.out.println("签名验证成功...");
+            log.debug("签名验证成功...");
             //去修改订单状态
             String result = orderService.handlePayResult(asyncVo);
             return result;
         } else {
-            System.out.println("签名验证失败...");
+            log.error("签名验证失败...");
             return "error";
         }
     }
