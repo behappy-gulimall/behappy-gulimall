@@ -2,7 +2,6 @@ package org.xiaowu.behappy.gateway.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.xiaowu.behappy.gateway.filter.AccessLogGlobalFilter;
 import org.xiaowu.behappy.gateway.filter.GlobalCacheRequestBodyFilter;
 import org.xiaowu.behappy.gateway.filter.GlobalLogFilter;
 
