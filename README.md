@@ -1,27 +1,42 @@
+# 注：
+
+> 请完整并详细的阅读每个项目的README！！！
+
 # 主要技术栈
 
-alibaba,cloud,springboot,最佳实践版本:https://github.com/alibaba/spring-cloud-alibaba/wiki/%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E
+alibaba,cloud,springboot,最佳实践版本：https://github.com/alibaba/spring-cloud-alibaba/wiki/%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E
 
 **核心依赖**
 
-> Jdk: 8
+renren-fast使用的是1.8，改17较为麻烦，所以未整合到gulimall中
+
+> Jdk: 17.x/1.8
 >
 > Maven: 3.8.7
 >
-> Nodejs: 10.24.1
+> Nodejs: 12.x
 
-| 依赖                 | 版本       |
-| -------------------- | ---------- |
-| Spring Boot          | 2.7.10     |
-| Spring Cloud         | 2021.0.5   |
-| Spring Cloud Alibaba | 2021.0.5.0 |
-| Mybatis Plus         | 3.5.2      |
-| Swagger              | 3.0.0      |
-| behappy redis        | 0.0.4      |
-| wxpay-sdk            | 0.0.3      |
-| Hutool               | 5.6.4      |
-| xxl job              | 2.3.1      |
-| druid                | 1.2.9      |
+
+| 依赖                 | 版本                                                    |
+| -------------------- | ------------------------------------------------------- |
+| Spring Boot          | 3.1.1                                                   |
+| Spring Cloud         | 2022.0.3                                                |
+| Spring Cloud Alibaba | 2022.0.0.0-RC2                                          |
+| Mybatis Plus         | 3.5.3.1                                                 |
+| Spring Doc Open Api  | 2.0.2                                                   |
+| Behappy-Redis        | 3.1.2(https://github.com/behappy-project/behappy-redis) |
+| Wxpay-Sdk            | 0.0.3                                                   |
+| Hutool               | 5.8.20                                                  |
+| ......               | ......                                                  |
+
+# TODO
+
+- [x] 微信支付
+- [x] 微信oauth2登录
+- [x] JDK17/SB3.x升级
+- [ ] K8S部署
+- [ ] graalvm云原生镜像构建
+- [ ] 链路日志（sleuth已不再兼容sb3.x，见[链接](https://docs.spring.io/spring-cloud-sleuth/docs/current-SNAPSHOT/reference/html/)，之后考虑自己实现）
 
 # 环境搭建
 
@@ -47,8 +62,8 @@ virtualBox下载地址：https://www.virtualbox.org/wiki/Downloads
 ## 修改Vagrantfile并执行创建虚拟机命令
 
 - 我们需要centos7版本的box，这里提供两种办法
-  - 一种是直接在`vagrant up`的时候让服务自己去下载(此种办法可能会由于网络问题下载失败)
-  - 或者通过此地址`https://app.vagrantup.com/centos/boxes/7/versions/2004.01/providers/virtualbox.box`，将box下载到本地，然后执行`vagrant box add --name centos/7 D:\HashiCorp\Vagrant\boxes\CentOS-7-x86_64-Vagrant-2004_01.VirtualBox.box`，再使用`vagrant box list`查看box列表是否存在，已存在则说明成功
+    - 一种是直接在`vagrant up`的时候让服务自己去下载(此种办法可能会由于网络问题下载失败)
+    - 或者通过此地址`https://app.vagrantup.com/centos/boxes/7/versions/2004.01/providers/virtualbox.box`，将box下载到本地，然后执行`vagrant box add --name centos/7 D:\HashiCorp\Vagrant\boxes\CentOS-7-x86_64-Vagrant-2004_01.VirtualBox.box`，再使用`vagrant box list`查看box列表是否存在，已存在则说明成功
 - 修改Vagrantfile
 
 ```yaml
@@ -110,7 +125,7 @@ sed -i 's/enforcing/disabled/' /etc/selinux/config
 setenforce 0
 ```
 
-* 关闭swap 
+* 关闭swap
 
 ```shell
 swapoff -a #临时关闭
@@ -158,186 +173,137 @@ curl -L https://github.com/docker/compose/releases/download/v2.16.0/docker-compo
 cd ~ && git clone https://github.com/behappy-project/behappy-docker-application.git
 ```
 
+- 注：
+  - 仓库内所有指定的地址均为192.168.56.100，可自行修改
+  - sentinel/docker-compose.yml需自行将环境变量注释部分打开
+
 - 先创建mysql，并初始化一些表结构和数据
 
 ```bash
 cd behappy-docker-application/ && docker-compose -f mysql/docker-compose.yml up -d
 
-创建好mysql后，执行doc/05-sql以及doc/nacos下的sql文件： tables_xxl_job.sql-》yygh_manager.sql-》yygh初始化表结构.sql-》yygh初始化数据.sql-》nacos初始化表结构.sql-》nacos初始化数据.sql
+创建好mysql后，执行resources下的sql文件： db/*.sql-》nacos初始化表结构.sql-》nacos初始化数据.sql-》seata/mysql.sql
 ```
 
 - 启动其他组件
 
 ```bash
-docker-compose -f redis/docker-compose.yml up -d && docker-compose -f mongo/docker-compose.yml up -d && docker-compose -f rabbitmq/docker-compose.yaml up -d && docker-compose -f nacos/docker-compose.yml up -d && docker-compose -f sentinel/docker-compose.yml up -d && docker-compose -f xxl-job-admin/docker-compose.yml up -d
+docker-compose -f redis/docker-compose.yml up -d && docker-compose -f rabbitmq/docker-compose.yaml up -d && docker-compose -f nacos/docker-compose.yml up -d && docker-compose -f sentinel/docker-compose.yml up -d && docker-compose -f seata/docker-compose.yml up -d
 ```
 
-# Nacos配置 (数据我已添加完，下面是演示)
+# Nacos配置
 
 > 共享配置信息被我放在了`application-dev.yml`中，可以自行查看且修改
 
-![](README/nacos-config.png)
-![](README/nacos-config2.png)
+![image-20230719111615104](README/image-20230719111615104.png)
 
-# Sentinel配置 (数据我已添加完，下面是演示)
+![image-20230719111652407](README/image-20230719111652407.png)
 
-当前配置了如下规则，可自行配置添加
+# Sentinel配置
 
-1. 下订单和支付两个操作，一旦支付接口达到了阈值，那么需要优先保障支付操作， 那么订单接口就被限流，从而保护支付的目的
+> 可自行配置
+>
+> sentinel-nacos集成版源码地址：https://github.com/behappy-project/behappy-sentinel-dashboard
 
-2. hospital服务设置统一限流
-
-对于限流和降级，可以在gateway中配置，也可以在单一application中配置，异常统一配置在`org.xiaowu.behappy.common.sentinel.exception.SentinelExceptionHandler`
-![img.png](README/sentinel1.png) 或
-![img.png](README/sentinel2.png)
+![image-20230719111726721](README/image-20230719111726721.png)
 注：gateway中，每一个RouteDefinition都有id唯一标识，格式为ReactiveCompositeDiscoveryClient_{微服务名}，所以routeId配置成{微服务名}是不生效的
 
 关于sentinel的详细教程可以参考：https://wang-xiaowu.github.io/posts/c7b26cd1/
 
+# Seata配置 (数据我已配置完，见nacos)
+
+![image](README/227769655-eeda9004-dcfa-4410-9701-8b621749d70d.png)
+
+
+
+> seata/分布式事务学习可见blog：https://wang-xiaowu.github.io/posts/4a100baa/ , https://wang-xiaowu.github.io/posts/cdcc4eae/
+
+## docker-compose方式启动seata-ha
+- `docker-compose -f seata/docker-compose.yml up -d`
+- 查看是否成功
+
+![image-20230719112509663](README/image-20230719112509663.png)
+
 # 服务配置+启动
 
-### 先后端项目
+### Nginx
 
-- 启动项目, 各模块作用已标明在下方
-- 后端必须启动的模块
+- Docker版本：谷粒商城-Nginx(静态资源代理以及服务反代)： https://github.com/behappy-gulimall/behappy-gulimall-nginx
 
+- Windows版：谷粒商城-Nginx(静态资源代理以及服务反代)： https://github.com/behappy-gulimall/behappy-gulimall-nginx-windows
+
+### 后端项目
+
+- 谷粒商城-后台管理-后端(renren-fast)： https://github.com/behappy-gulimall/behappy-gulimall-fast
+- 谷粒商城SpringBoot3.x： https://github.com/behappy-gulimall/behappy-gulimall
+
+### 前端项目
+
+- 谷粒商城-后台管理-前端(renren-fast-vue)： https://github.com/behappy-gulimall/behappy-gulimall-vue
+
+> npm install && npm run start
+
+# 系统流程
+
+> 具体的流程不再赘述，这里主要补充下老师原版课程中未涉及到的
+
+### 配置HOST
+
+```bash
+# ip指向你的服务运行所在机器
+127.0.0.1 gulimall.com
+127.0.0.1 search.gulimall.com
+127.0.0.1 item.gulimall.com
+127.0.0.1 auth.gulimall.com
+127.0.0.1 cart.gulimall.com
+127.0.0.1 order.gulimall.com
+127.0.0.1 member.gulimall.com
+127.0.0.1 seckill.gulimall.com
 ```
-BehappyCmnApplication
-BehappyGatewayApplication
-BehappyHospApplication
-BehappyManagerApplication
-BehappyMsmApplication
-BehappyOrderApplication
-BehappyUserApplication
-```
 
-### 后前端项目
+### 配置内网穿透
 
-[behappy-hospital-admin](https://github.com/behappy-hospital/behappy-hospital-admin) -- 后台管理
+> 使用ngrok可以参考：https://www.xiaowu95.wang/posts/c43c5d8d/
 
-[behappy-hospital-user](https://github.com/behappy-hospital/behappy-hospital-user) -- 平台页面
+### 后台操作
 
-`git clone https://github.com/behappy-hospital/behappy-hospital-admin.git && git clone https://github.com/behappy-hospital/behappy-hospital-user.git`
-
-> 下载依赖 && 启动(两个项目的下载依赖方式和启动方式都一样)
+> 在上面执行sql的过程中，我已准备好商品数据，你可以自行选择导入（oss图片我已关了公共读权限，请自行更改）
 >
-> npm install && npm run dev
+> 或者自行进行`手动上架`以及`配置库存`操作。当然，这两个操作不冲突，但也可二选一
 
-# 系统操作流程
+#### 手动上架数据库商品数据
 
-## 操作流程(项目启动成功后)
+> 执行测试类：`BehappyProductApplicationTests.upProductToEs`
 
-### 登陆manager服务, 设置医院信息
+#### 创建库存
 
-> 医院code：1000_0
+![image-20230710173142807](README/image-20230710173142807.png)
+
+#### 创建会员默认等级
+
+![image-20230710165359394](README/image-20230710165359394.png)
+
+#### 配置会员地址
+
+![image-20230712140251492](README/image-20230712140251492.png)
+
+### 微信登录
+
+> appid及secret使用的是谷粒学院课程中提供的，在此感谢
 >
-> 签名key：880189488a80a9d7851d63240fd22aba
+> 微信回调后，我们再重定向到auth.gulimall.com下，保证session共享在同一个顶级域名下。所以定义/callback和/recallback两个接口进行接口转发
+
+![image-20230719114543790](README/image-20230719114543790.png)
+
+![image-20230719114558360](README/image-20230719114558360.png)
+
+### 微信支付
+
+> 每个商品的定价已设置为1分，所以可放心测试
 >
-> 基础路径：http://localhost:8201
+> 记得修改notify-url
 
-![image-20230308154527522](README/image-20230308154527522.png)
-
-### 导入医院数据
-
-![image-20230308154612826](README/image-20230308154612826.png)
-
-### 添加科室信息
-
-> **找到behappy-manager/resources下的department.json, 复制粘贴-科室列表**
-
-![image-20230308154651739](README/image-20230308154651739.png)
-
-### 添加排班信息
-
-> **找到behappy-manager/resources下的schedule.json, 复制粘贴-排班列表**
-
-![image-20230308154723241](README/image-20230308154723241.png)
-
-### 登陆behappy-hospital-user, 完成注册登陆
-
-> **使用localhost访问,不要用ipv4,保证与微信回调地址一致**
-
-#### 使用手机号或者微信登陆(目前是模拟发送短信, 在MsmService中可自行打开注释. 微信登陆使用谷粒学院的key和secret)
-
-![img_3.png](README/img_3.png)
-
-> **登陆后会回调到`myheader.vue的loginCallback方法中`, 如果openid为空则说明此用户为新用户, 需要绑定手机号. 接着打开手机登录层，绑定手机号**
-
-#### 查看`behappy-msm`模块的日志, 能找到验证码
-
-### 完成实名验证
-
-#### 已取消了图片验证, 可以不传图片, 如果传图片, 记得将oss模块中的key和secret补全
-
-![img_5.png](README/img_5.png)
-
-#### 登陆到admin, 通过认证
-
-![img_4.png](README/img_4.png)
-
-### 下单流程
-
-#### 添加就诊人
-
-![image-20230308175133552](README/image-20230308175133552.png)
-
-#### 回到科室页，找到`多发性硬化专科门诊`科室(仅此科室有数据)
-
-![image-20230308175310762](README/image-20230308175310762.png)
-
-#### 进行挂号
-
-![img_7.png](README/img_7.png)
-
-#### 进行支付(目前3秒轮询查询订单状态, 待已支付后窗口关闭)
-
-![img_6.png](README/img_6.png)
-
-### 退单流程
-
-#### 退单逻辑在`OrderService-cancelOrder, 可自行将时间限定注释打开`
-
-![img_8.png](README/img_8.png)
-
-### spring boot admin查看各模块状态
-
-![img.png](README/img_9.png)
-
-### xxl job (数据我已添加完，下面是演示)
-
-#### 添加执行器（AppName必须和`xxl.job.executor.appname`保持一致）
-
-![img_1.png](README/img_10.png)
-
-![img_2.png](README/img_11.png)
-
-#### 添加任务(handler对应代码在`ReminderXxlJob`)
-
-![img_3.png](README/img_12.png)
-
-#### 执行日志查看
-
-![img_4.png](README/img_13.png)
-
-### 查看msm服务
-
-> 接收到了mq的提醒消息
-
-![img.png](README/img_14.png)
-
-# 各服务地址一览
-
-### behappy-hospital-user
-
-地址：http://localhost:3000
-
-### behappy-hospital-admin
-
-地址：http://localhost:9528
-
-### 医院接口模拟管理系统
-
-地址：http://localhost:9998/
+# 各中间件服务地址一览
 
 ### Nacos控制台
 
@@ -355,33 +321,9 @@ BehappyUserApplication
 
 密码：sentinel
 
-### druid控制台
+### spring doc地址
 
-地址：http://localhost:{服务端口}/druid/login.html
-
-账户：admin
-
-密码：admin
-
-### swagger地址
-
-地址：http://localhost:8088/swagger-ui/index.html
-
-### xxl job admin
-
-地址：http://192.168.56.100:8080/xxl-job-admin/
-
-账户：admin
-
-密码：123456
-
-### spring boot admin
-
-地址：http://localhost:8203/
-
-账户：root
-
-密码：root
+地址：http://localhost:88/swagger-ui.html
 
 ### rabbitMQ manager
 
@@ -393,49 +335,38 @@ BehappyUserApplication
 
 # 模块
 
-```
-├─behappy-api --放feign和VO/DTO/Constant
-│  ├─behappy-api-cmn
+```tree
+├─behappy-api  - 放置vo/to/dto/feign
+│  ├─behappy-api-auth
+│  ├─behappy-api-cart
 │  ├─behappy-api-common
-│  ├─behappy-api-hosp
-│  ├─behappy-api-manager
-│  ├─behappy-api-msm
+│  ├─behappy-api-coupon
+│  ├─behappy-api-member
 │  ├─behappy-api-order
-│  └─behappy-api-user
-├─behappy-cmn --数据字典模块
-├─behappy-common --公共模块
-│  ├─behappy-common-core --核心模块
-│  ├─behappy-common-mongo --mongo模块
-│  ├─behappy-common-mybatis --mybatis模块
-│  ├─behappy-common-rmq --rabbit mq模块
-│  └─behappy-common-sentinel --sentinel/feign配置模块
-├─behappy-executor-task --放定时任务, 整合xxl-job使用
-├─behappy-gateway --网关模块
-├─behappy-hosp --医院模块
-├─behappy-manager --后台管理模块
-├─behappy-monitor --springboot admin
-├─behappy-msm --短信模块
-├─behappy-order --订单模块
-├─behappy-oss --oss模块
-├─behappy-statistics --信息统计模块
-├─behappy-user --用户模块
-└─doc
-    ├─01-教案
-    ├─02-分析图
-    ├─03-尚医通架构图
-    ├─04-尚医通业务流程图
-    ├─05-sql
-    └─nacos
+│  ├─behappy-api-product
+│  ├─behappy-api-search
+│  ├─behappy-api-seckill
+│  ├─behappy-api-thirdparty
+│  └─behappy-api-ware
+├─behappy-auth-server  - auth模块
+├─behappy-cart  - 购物车模块
+├─behappy-common  - 公共模块
+│  ├─behappy-common-core
+│  ├─behappy-common-es
+│  ├─behappy-common-mybatis
+│  ├─behappy-common-pay
+│  ├─behappy-common-rmq
+│  ├─behappy-common-seata
+│  └─behappy-common-sentinel
+├─behappy-coupon  - 优惠模块
+├─behappy-gateway  - 服务网关
+├─behappy-member  - 会员模块
+├─behappy-order  - 订单模块
+├─behappy-product  - 商品模块
+├─behappy-search  - 搜索模块
+├─behappy-seckill  - 秒杀模块
+├─behappy-third-party  - 第三方模块
+├─behappy-ware  - 库存模块
+├─resources  - 笔记/文档/sql
 ```
 
-创建会员默认等级
-
-![image-20230710165359394](README/image-20230710165359394.png)
-
-配置会员地址
-
-![image-20230712140251492](README/image-20230712140251492.png)
-
-创建库存
-
-![image-20230710173142807](README/image-20230710173142807.png)
