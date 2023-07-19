@@ -271,6 +271,10 @@ docker-compose -f redis/docker-compose.yml up -d && docker-compose -f rabbitmq/d
 >
 > 或者自行进行`手动上架`以及`配置库存`操作。当然，这两个操作不冲突，但也可二选一
 
+#### 创建es索引
+
+> 执行`behappy-search\src\main\resources\new_product_mapping.json`
+
 #### 手动上架数据库商品数据
 
 > 执行测试类：`BehappyProductApplicationTests.upProductToEs`
