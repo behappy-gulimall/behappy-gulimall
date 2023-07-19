@@ -1,3 +1,7 @@
+> 欢迎“一键三连[watch,fork,star]”
+### 技术沟通群
+<img src="README/behappy_group.jpg" width="300px">
+
 # 注：
 
 > 请完整并详细的阅读每个项目的README！！！
