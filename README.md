@@ -265,6 +265,16 @@ docker-compose -f redis/docker-compose.yml up -d && docker-compose -f rabbitmq/d
 
 > 使用ngrok可以参考：https://www.xiaowu95.wang/posts/c43c5d8d/
 
+### 微博（可选，可用微信登录）
+
+#### 注册开发账户
+
+![image-20230719155516716](README/image-20230719155516716.png)
+
+#### 修改登录指向地址
+
+> 修改`behappy-auth-server\src\main\resources\templates\login.html`中的`https://api.weibo.com/oauth2/authorize?client_id=1108171748&response_type=code&redirect_uri=http%3A%2F%2Fauth.gulimall.com%2Foauth2.0%2Fweibo%2Fsuccess`，将client_id修改为你的
+
 ### 后台操作
 
 > 在上面执行sql的过程中，我已准备好商品数据，你可以自行选择导入（oss图片我已关了公共读权限，请自行更改）
