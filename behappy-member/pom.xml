@@ -9,6 +9,9 @@
     </parent>
     <artifactId>behappy-member</artifactId>
     <description>用户模块</description>
+    <properties>
+        <start-class>org.xiaowu.behappy.member.BehappyMemberApplication</start-class>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>

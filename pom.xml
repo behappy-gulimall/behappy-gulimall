@@ -439,8 +439,6 @@
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
                     <configuration>
-                        <!-- 指定该Main Class为全局的唯一入口 -->
-                        <mainClass>org.xiaowu.behappy.member.BehappyMemberApplication</mainClass>
                         <excludes>
                             <exclude>
                                 <groupId>org.projectlombok</groupId>
@@ -457,6 +455,14 @@
                             </env>
                         </image>
                     </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <!--可以把依赖都打包到生成的Jar包中-->
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
                 <plugin>
                     <!-- 该插件将阻止二进制文件过滤，默认为以下文件扩展名添加排除配置:jpg, jpeg, gif, bmp 以及 png, 可通过nonFilteredFileExtension进行拓展 -->
