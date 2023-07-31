@@ -28,12 +28,7 @@ public class IpUtil {
             if (ipAddress == null || ipAddress.length() == 0 || UNKNOWN.equalsIgnoreCase(ipAddress)) {
                 ipAddress = request.getRemoteAddr();
                 if (LOCALHOST.equals(ipAddress)) {
-                    InetAddress inet = null;
-                    try {
-                        inet = InetAddress.getLocalHost();
-                    } catch (UnknownHostException e) {
-                        e.printStackTrace();
-                    }
+                    InetAddress inet = InetAddress.getLocalHost();
                     ipAddress = inet.getHostAddress();
                 }
             }
@@ -90,7 +85,7 @@ public class IpUtil {
         String ip = UNKNOWN;
 
         try {
-            Enumeration enumeration = NetworkInterface.getNetworkInterfaces();
+            Enumeration<NetworkInterface> enumeration = NetworkInterface.getNetworkInterfaces();
 
             while (enumeration.hasMoreElements()) {
                 NetworkInterface ni = (NetworkInterface) enumeration.nextElement();

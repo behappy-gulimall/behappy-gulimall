@@ -66,6 +66,11 @@
                     <mainClass>org.xiaowu.behappy.member.BehappyMemberApplication</mainClass>
                 </configuration>
             </plugin>
+            <plugin>
+                <!-- 该插件将阻止二进制文件过滤，默认为以下文件扩展名添加排除配置:jpg, jpeg, gif, bmp 以及 png, 可通过nonFilteredFileExtension进行拓展 -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+            </plugin>
         </plugins>
     </build>
 

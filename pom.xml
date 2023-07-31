@@ -438,7 +438,6 @@
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
-                    <version>${spring-boot.version}</version>
                     <configuration>
                         <excludes>
                             <exclude>
@@ -447,7 +446,9 @@
                             </exclude>
                         </excludes>
                         <image>
-                            <builder>paketobuildpacks/builder:tiny</builder>
+                            <!--默认为：https://github.com/paketo-buildpacks/tiny-builder -->
+                            <!--archived to another repo：https://github.com/paketo-buildpacks/builder-jammy-tiny -->
+                            <builder>paketobuildpacks/builder-jammy-tiny</builder>
                             <env>
                                 <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
                                 <BP_NATIVE_IMAGE_BUILD_ARGUMENTS>-march=compatibility</BP_NATIVE_IMAGE_BUILD_ARGUMENTS>
