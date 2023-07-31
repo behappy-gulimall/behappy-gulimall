@@ -16,12 +16,12 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <!--https://mvnrepository.com/artifact/org.springframework.boot/spring-boot -->
-        <spring-boot.version>3.1.1</spring-boot.version>
+        <spring-boot.version>3.1.2</spring-boot.version>
         <!--https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies -->
-        <spring-cloud.version>2022.0.3</spring-cloud.version>
+        <spring-cloud.version>2022.0.4</spring-cloud.version>
         <!-- alibaba,cloud,springboot,最佳实践版本: https://github.com/alibaba/spring-cloud-alibaba/wiki/%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E -->
         <!--https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-alibaba-dependencies -->
-        <spring-cloud-alibaba.version>2022.0.0.0-RC2</spring-cloud-alibaba.version>
+        <spring-cloud-alibaba.version>2022.0.0.0</spring-cloud-alibaba.version>
         <!--https://mvnrepository.com/artifact/de.codecentric/spring-boot-admin-starter-server -->
         <spring-boot-admin.version>3.0.4</spring-boot-admin.version>
         <!--https://mvnrepository.com/artifact/io.swagger.core.v3/swagger-annotations-jakarta -->
@@ -29,7 +29,7 @@
         <!--https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webflux-ui -->
         <springdoc.version>2.1.0</springdoc.version>
         <!--https://mvnrepository.com/artifact/com.alibaba.fastjson2/fastjson2 -->
-        <fastjson2.version>2.0.32</fastjson2.version>
+        <fastjson2.version>2.0.38</fastjson2.version>
         <!--https://mvnrepository.com/artifact/joda-time/joda-time -->
         <joda.time.version>2.12.5</joda.time.version>
         <!--https://mvnrepository.com/artifact/com.alibaba/easyexcel -->
@@ -432,6 +432,10 @@
         <pluginManagement>
             <plugins>
                 <plugin>
+                    <groupId>org.graalvm.buildtools</groupId>
+                    <artifactId>native-maven-plugin</artifactId>
+                </plugin>
+                <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
                     <version>${spring-boot.version}</version>
@@ -446,6 +450,13 @@
                                 <artifactId>lombok</artifactId>
                             </exclude>
                         </excludes>
+                        <image>
+                            <builder>paketobuildpacks/builder:tiny</builder>
+                            <env>
+                                <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
+                                <BP_NATIVE_IMAGE_BUILD_ARGUMENTS>-march=compatibility</BP_NATIVE_IMAGE_BUILD_ARGUMENTS>
+                            </env>
+                        </image>
                     </configuration>
                     <executions>
                         <execution>
