@@ -71,11 +71,4 @@ public class JwtHelper {
         byte[] encodedKey = Base64.decode(TOKEN_SIGN_KEY.getBytes(StandardCharsets.UTF_8));
         return new SecretKeySpec(encodedKey, 0, encodedKey.length, SignatureAlgorithm.HS256.getJcaName());
     }
-
-    public static void main(String[] args) {
-        String token = JwtHelper.createToken("129", "55");
-        System.out.println(token);
-        System.out.println(JwtHelper.getUserId(token));
-        System.out.println(JwtHelper.getUserName(token));
-    }
 }

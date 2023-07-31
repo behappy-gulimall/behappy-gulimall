@@ -182,8 +182,4 @@ public class IpUtil {
         return FormatUtils.wrapStringWithBracket(getLocalIp() + "," + getHostName());
     }
 
-    public static void main(String[] args) {
-        System.out.println(getLocalIpFromWindows());
-        System.out.println(getLocalIpFromLinux());
-    }
 }
