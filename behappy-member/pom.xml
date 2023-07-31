@@ -61,6 +61,10 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <!-- 指定该Main Class为全局的唯一入口 -->
+                    <mainClass>org.xiaowu.behappy.member.BehappyMemberApplication</mainClass>
+                </configuration>
             </plugin>
         </plugins>
     </build>
