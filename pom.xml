@@ -24,6 +24,8 @@
         <spring-cloud-alibaba.version>2022.0.0.0</spring-cloud-alibaba.version>
         <!--https://mvnrepository.com/artifact/de.codecentric/spring-boot-admin-starter-server -->
         <spring-boot-admin.version>3.0.4</spring-boot-admin.version>
+        <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-bindings -->
+        <spring-cloud-bindings.version>2.0.1</spring-cloud-bindings.version>
         <!--https://mvnrepository.com/artifact/io.swagger.core.v3/swagger-annotations-jakarta -->
         <swagger.core.version>2.2.10</swagger.core.version>
         <!--https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webflux-ui -->
@@ -413,6 +415,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-bindings -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-bindings</artifactId>
+            <version>${spring-cloud-bindings.version}</version>
         </dependency>
     </dependencies>
 
