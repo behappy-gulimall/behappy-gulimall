@@ -440,10 +440,6 @@
                     <artifactId>spring-boot-maven-plugin</artifactId>
                     <version>${spring-boot.version}</version>
                     <configuration>
-                        <finalName>${project.build.finalName}</finalName>
-                        <layers>
-                            <enabled>true</enabled>
-                        </layers>
                         <excludes>
                             <exclude>
                                 <groupId>org.projectlombok</groupId>
@@ -458,13 +454,6 @@
                             </env>
                         </image>
                     </configuration>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>repackage</goal>
-                            </goals>
-                        </execution>
-                    </executions>
                 </plugin>
                 <plugin>
                     <!-- 该插件将阻止二进制文件过滤，默认为以下文件扩展名添加排除配置:jpg, jpeg, gif, bmp 以及 png, 可通过nonFilteredFileExtension进行拓展 -->
