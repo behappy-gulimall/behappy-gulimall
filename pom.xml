@@ -504,6 +504,12 @@
                 <profiles.active>prod</profiles.active>
             </properties>
         </profile>
+        <profile>
+            <id>native</id>
+            <properties>
+                <profiles.active>native</profiles.active>
+            </properties>
+        </profile>
     </profiles>
 
 </project>
