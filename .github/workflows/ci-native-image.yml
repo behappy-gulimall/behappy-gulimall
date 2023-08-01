@@ -35,7 +35,7 @@ jobs:
 
     env:
       BUILD_WORKLOAD: ${{ github.event.inputs.workload }}
-      DOCKER_REPOSITORY: behappy-gulimall/${{ github.event.inputs.workload }}
+      DOCKER_REPOSITORY: behappy-gulimall:${{ github.event.inputs.workload }}
       DOCKER_USERNAME: wangxiaowu950330
 
     steps:
