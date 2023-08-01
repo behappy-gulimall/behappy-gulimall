@@ -50,6 +50,7 @@ jobs:
 
       - name: Print debug info
         run: |
+          ls $BUILD_WORKLOAD
           echo "JAVA_HOME: $JAVA_HOME"
           java --version
 
