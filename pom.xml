@@ -480,6 +480,7 @@
                             </configuration>
                             <executions>
                                 <execution>
+                                    <id>build-image</id>
                                     <goals>
                                         <goal>repackage</goal>
                                     </goals>
@@ -511,6 +512,7 @@
                             </configuration>
                             <executions>
                                 <execution>
+                                    <id>build-image</id>
                                     <goals>
                                         <goal>repackage</goal>
                                     </goals>
