@@ -1,0 +1,82 @@
+name: CI JVM workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      workload:
+        description: 'Select the workload to build'
+        type: choice
+        required: true
+        options:
+          - behappy-auth-server
+          - behappy-cart
+          - behappy-coupon
+          - behappy-gateway
+          - behappy-member
+          - behappy-order
+          - behappy-product
+          - behappy-search
+          - behappy-seckill
+          - behappy-third-party
+          - behappy-ware
+        default: 'behappy-auth-server'
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write # need this for OIDC
+      contents: read
+
+    environment: ${{ github.event.inputs.environment || 'dev' }}
+    env:
+      BUILD_WORKLOAD: ${{ github.event.inputs.workload }}
+      DOCKER_REPOSITORY: behappy-gulimall:${{ github.event.inputs.workload }}
+      DOCKER_USERNAME: wangxiaowu950330
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup jdk
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
+          distribution: 'adopt'
+          cache: maven
+
+      - name: Print debug info
+        run: |
+          echo "JAVA_HOME: $JAVA_HOME"
+          java --version
+
+      - name: Collect Workflow Telemetry
+        uses: runforesight/workflow-telemetry-action@v1
+
+      - name: Build with Maven and Buildpacks
+        run: mvn clean -pl $BUILD_WORKLOAD -am -Pdev -Dspring-boot.build-image.imageName=$DOCKER_USERNAME/$DOCKER_REPOSITORY:latest package
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ env.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Set project version as environment variable
+        run: echo "PROJECT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
+
+      - name: Print debug info
+        run: |
+          echo project version is ${{ env.PROJECT_VERSION }}
+
+      - name: Tag and push image to Docker Hub
+        env:
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+          IMAGE_TAG: ${{ env.PROJECT_VERSION }}-original
+        run: |
+          docker tag $DOCKER_USERNAME/$DOCKER_REPOSITORY:latest $DOCKER_USERNAME/$DOCKER_REPOSITORY:$IMAGE_TAG
+          docker push $DOCKER_USERNAME/$DOCKER_REPOSITORY:$IMAGE_TAG
+          echo "::set-output name=image::$DOCKER_USERNAME/$DOCKER_REPOSITORY:$IMAGE_TAG"
