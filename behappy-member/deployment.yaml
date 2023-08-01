@@ -1,0 +1,87 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: behappy-member
+  namespace: behappy-gulimall
+  labels:
+    app: behappy-member
+spec:
+  selector:
+    app: behappy-member
+  type: NodePort
+  ports:
+    - port: 30009
+      targetPort: web
+      nodePort: 30009
+      protocol: TCP
+      name: web
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: behappy-member
+  labels:
+    app: behappy-member
+spec:
+  selector:
+    matchLabels:
+      app: behappy-member
+  replicas: 2                            # Pod副本数
+  strategy:
+    type: RollingUpdate                           # 滚动更新策略
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      name: behappy-member
+      labels:
+        app: behappy-member          # 基于pod的服务发现
+    spec:
+      affinity:                                   # 设置调度策略，采取多主机/多可用区部署
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - behappy-member
+                topologyKey: "kubernetes.io/hostname" # 多可用区为"topology.kubernetes.io/zone"
+      terminationGracePeriodSeconds: 30             # 优雅终止宽限期
+      containers:
+        - name: behappy-member
+          image: wangxiaowu950330/behappy-gulimall.behappy-member:RELEASE-3.0.0-original
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 30009
+              name: web
+            - name: management-port
+              containerPort: 50000         # 应用管理端口
+          readinessProbe:                # 就绪探针
+            httpGet:
+              path: /actuator/health/readiness
+              port: management-port
+            initialDelaySeconds: 30      # 延迟加载时间
+            periodSeconds: 10            # 重试时间间隔
+            timeoutSeconds: 1            # 超时时间设置
+            successThreshold: 1          # 健康阈值
+            failureThreshold: 9          # 不健康阈值
+          livenessProbe:                 # 存活探针
+            httpGet:
+              path: /actuator/health/liveness
+              port: management-port
+            initialDelaySeconds: 30      # 延迟加载时间
+            periodSeconds: 10            # 重试时间间隔
+            timeoutSeconds: 1            # 超时时间设置
+            successThreshold: 1          # 健康阈值
+            failureThreshold: 6          # 不健康阈值
+          resources:                     # 容器资源管理
+            limits:                      # 资源限制（监控使用情况）
+              cpu: "0.5"
+              memory: 256Mi
+            requests:                    # 最小可用资源（灵活调度）
+              cpu: "0.1"
+              memory: 256Mi
