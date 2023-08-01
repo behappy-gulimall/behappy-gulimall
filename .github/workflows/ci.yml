@@ -50,7 +50,6 @@ jobs:
 
       - name: Print debug info
         run: |
-          ls $BUILD_WORKLOAD
           echo "JAVA_HOME: $JAVA_HOME"
           java --version
 
@@ -78,6 +77,6 @@ jobs:
           DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
           IMAGE_TAG: ${{ env.PROJECT_VERSION }}-original
         run: |
-          docker build -t $DOCKER_USERNAME/$DOCKER_REPOSITORY:$IMAGE_TAG -f $BUILD_WORKLOAD/Dockerfile $BUILD_WORKLOAD
+          docker build -f $BUILD_WORKLOAD/Dockerfile -t $DOCKER_USERNAME/$DOCKER_REPOSITORY:$IMAGE_TAG $BUILD_WORKLOAD
           docker push $DOCKER_USERNAME/$DOCKER_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$DOCKER_USERNAME/$DOCKER_REPOSITORY:$IMAGE_TAG"
