@@ -20,13 +20,14 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: behappy-product
+  namespace: behappy-gulimall
   labels:
     app: behappy-product
 spec:
   selector:
     matchLabels:
       app: behappy-product
-  replicas: 2                            # Pod副本数
+  replicas: 1                            # Pod副本数
   strategy:
     type: RollingUpdate                           # 滚动更新策略
     rollingUpdate:
@@ -34,7 +35,6 @@ spec:
       maxUnavailable: 0
   template:
     metadata:
-      name: behappy-product
       labels:
         app: behappy-product          # 基于pod的服务发现
     spec:
