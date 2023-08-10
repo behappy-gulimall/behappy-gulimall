@@ -64,20 +64,20 @@ spec:
             httpGet:
               path: /actuator/health/readiness
               port: management-port
-            initialDelaySeconds: 30      # 延迟加载时间
-            periodSeconds: 10            # 重试时间间隔
-            timeoutSeconds: 1            # 超时时间设置
+            initialDelaySeconds: 90      # 延迟加载时间
+            periodSeconds: 30            # 重试时间间隔
+            timeoutSeconds: 30            # 超时时间设置
             successThreshold: 1          # 健康阈值
-            failureThreshold: 9          # 不健康阈值
+            failureThreshold: 3          # 不健康阈值
           livenessProbe:                 # 存活探针
             httpGet:
               path: /actuator/health/liveness
               port: management-port
-            initialDelaySeconds: 30      # 延迟加载时间
-            periodSeconds: 10            # 重试时间间隔
-            timeoutSeconds: 1            # 超时时间设置
+            initialDelaySeconds: 90      # 延迟加载时间
+            periodSeconds: 30            # 重试时间间隔
+            timeoutSeconds: 30            # 超时时间设置
             successThreshold: 1          # 健康阈值
-            failureThreshold: 6          # 不健康阈值
+            failureThreshold: 3          # 不健康阈值
           resources:                     # 容器资源管理
             limits:                      # 资源限制（监控使用情况）
               cpu: "0.5"

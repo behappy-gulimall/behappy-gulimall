@@ -70,6 +70,10 @@
         <elasticsearch.client.version>7.14.1</elasticsearch.client.version>
         <!--https://mvnrepository.com/artifact/io.seata/seata-spring-boot-starter -->
         <seata.version>1.6.1</seata.version>
+        <!-- https://mvnrepository.com/artifact/com.alibaba.nacos/logback-adapter -->
+        <logback-adapter.version>1.0.0</logback-adapter.version>
+        <!-- https://mvnrepository.com/artifact/com.alibaba.nacos/logback-adapter -->
+        <logback-classic.version>1.4.5</logback-classic.version>
     </properties>
     <modules>
         <module>behappy-api</module>
@@ -122,6 +126,11 @@
                     <exclusion>
                         <artifactId>spring-boot-starter-tomcat</artifactId>
                         <groupId>org.springframework.boot</groupId>
+                    </exclusion>
+                    <!--Standard Commons Logging discovery in action with spring-jcl: please remove commons-logging.jar from classpath in order to avoid potential conflicts-->
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
                     </exclusion>
                 </exclusions>
             </dependency>
@@ -262,6 +271,18 @@
                 <artifactId>jackson-annotations</artifactId>
                 <version>${jackson-annotations.version}</version>
             </dependency>
+            <!--https://github.com/alibaba/nacos/issues/10890-->
+            <dependency>
+                <groupId>com.alibaba.nacos</groupId>
+                <artifactId>logback-adapter</artifactId>
+                <version>${logback-adapter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback-classic.version}</version>
+            </dependency>
+            <!--https://github.com/alibaba/nacos/issues/10890-->
             <dependency>
                 <groupId>io.github.wang-xiaowu</groupId>
                 <artifactId>behappy-redis</artifactId>
