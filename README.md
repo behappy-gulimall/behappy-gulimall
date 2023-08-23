@@ -38,7 +38,7 @@ renren-fast使用的是1.8，改17较为麻烦，所以未整合到gulimall中
 - [x] 微信支付
 - [x] 微信oauth2登录
 - [x] JDK17/SB3.x升级
-- [ ] K8S部署
+- [x] K8S部署（详见各项目下的资源文件）
 - [ ] graalvm云原生镜像构建
 - [ ] 链路日志（sleuth已不再兼容sb3.x，见[链接](https://docs.spring.io/spring-cloud-sleuth/docs/current-SNAPSHOT/reference/html/)，之后考虑自己实现）
 
@@ -85,7 +85,7 @@ Vagrant.configure("2") do |config|
                 # 设置虚拟机的名称
                 v.name = "behappy#{i}"
                 # 设置虚拟机的内存大小
-                v.memory = 8192
+                v.memory = 6144
                 # 设置虚拟机的CPU个数
                 v.cpus = 4
             end
