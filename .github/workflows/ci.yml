@@ -42,7 +42,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Setup jdk
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v3
         with:
           java-version: 17
           distribution: 'adopt'
