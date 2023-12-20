@@ -197,7 +197,7 @@ docker-compose -f redis/docker-compose.yml up -d && docker-compose -f rabbitmq/d
 
 # Nacos配置
 
-> 共享配置信息被我放在了`application-dev.yml`中，可以自行查看且修改
+> 共享配置信息被我放在了`Data Id`为`application-dev.yml`的配置中，可以自行查看且修改
 
 ![image-20230719111615104](README/image-20230719111615104.png)
 
